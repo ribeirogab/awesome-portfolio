@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { FiArrowUp, FiMenu, FiMoon, FiSun } from "react-icons/fi";
-import { SiGithub } from "react-icons/si";
-import { githubUrl } from "@/data/portfolio";
+import { FiArrowUp, FiAtSign, FiMenu, FiMoon, FiSun } from "react-icons/fi";
+import { socialLinks } from "@/data/portfolio";
 
 const sections = [
 	{ href: "#experience", label: "Experience", index: "01" },
@@ -12,31 +11,38 @@ const sections = [
 	{ href: "#contact", label: "Contact", index: "04" },
 ];
 
+type MenuName = "sections" | "social";
+
 export function Dock() {
-	const [menuOpen, setMenuOpen] = useState(false);
-	const menuRef = useRef<HTMLDivElement>(null);
-	const menuButtonRef = useRef<HTMLButtonElement>(null);
+	const [openMenu, setOpenMenu] = useState<MenuName | null>(null);
+	const sectionsMenuRef = useRef<HTMLDivElement>(null);
+	const sectionsButtonRef = useRef<HTMLButtonElement>(null);
+	const socialMenuRef = useRef<HTMLDivElement>(null);
+	const socialButtonRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
-		if (!menuOpen) {
+		if (!openMenu) {
 			return;
 		}
+		const menuRef = openMenu === "sections" ? sectionsMenuRef : socialMenuRef;
+		const buttonRef =
+			openMenu === "sections" ? sectionsButtonRef : socialButtonRef;
 		const focusFrame = requestAnimationFrame(() => {
 			menuRef.current?.querySelector("a")?.focus();
 		});
 		const onKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
-				setMenuOpen(false);
-				menuButtonRef.current?.focus();
+				setOpenMenu(null);
+				buttonRef.current?.focus();
 			}
 		};
 		const onClick = (event: MouseEvent) => {
 			const target = event.target as Node;
 			if (
 				!menuRef.current?.contains(target) &&
-				!menuButtonRef.current?.contains(target)
+				!buttonRef.current?.contains(target)
 			) {
-				setMenuOpen(false);
+				setOpenMenu(null);
 			}
 		};
 		document.addEventListener("keydown", onKeyDown);
@@ -46,7 +52,11 @@ export function Dock() {
 			document.removeEventListener("keydown", onKeyDown);
 			document.removeEventListener("click", onClick);
 		};
-	}, [menuOpen]);
+	}, [openMenu]);
+
+	const toggleMenu = (name: MenuName) => {
+		setOpenMenu((value) => (value === name ? null : name));
+	};
 
 	const toggleTheme = () => {
 		const root = document.documentElement;
@@ -71,24 +81,32 @@ export function Dock() {
 				<button
 					className="dock-btn"
 					type="button"
-					ref={menuButtonRef}
-					aria-label={menuOpen ? "Close section menu" : "Open section menu"}
-					aria-expanded={menuOpen}
+					ref={sectionsButtonRef}
+					aria-label={
+						openMenu === "sections" ? "Close section menu" : "Open section menu"
+					}
+					aria-expanded={openMenu === "sections"}
 					aria-controls="dock-menu"
-					onClick={() => setMenuOpen((value) => !value)}
+					onClick={() => toggleMenu("sections")}
 				>
 					<FiMenu strokeWidth={1.8} aria-hidden="true" />
 				</button>
 				<span className="dock-sep" aria-hidden="true" />
-				<a
+				<button
 					className="dock-btn"
-					href={githubUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					aria-label="GitHub profile"
+					type="button"
+					ref={socialButtonRef}
+					aria-label={
+						openMenu === "social"
+							? "Close social links menu"
+							: "Open social links menu"
+					}
+					aria-expanded={openMenu === "social"}
+					aria-controls="dock-social"
+					onClick={() => toggleMenu("social")}
 				>
-					<SiGithub aria-hidden="true" />
-				</a>
+					<FiAtSign strokeWidth={1.8} aria-hidden="true" />
+				</button>
 				<button
 					className="dock-btn"
 					type="button"
@@ -100,9 +118,9 @@ export function Dock() {
 				</button>
 			</nav>
 			<div
-				className={menuOpen ? "dock-menu open" : "dock-menu"}
+				className={openMenu === "sections" ? "dock-menu open" : "dock-menu"}
 				id="dock-menu"
-				ref={menuRef}
+				ref={sectionsMenuRef}
 				role="menu"
 				aria-label="Sections"
 			>
@@ -111,9 +129,29 @@ export function Dock() {
 						key={section.href}
 						href={section.href}
 						role="menuitem"
-						onClick={() => setMenuOpen(false)}
+						onClick={() => setOpenMenu(null)}
 					>
 						{section.label} <span className="idx">{section.index}</span>
+					</a>
+				))}
+			</div>
+			<div
+				className={openMenu === "social" ? "dock-menu open" : "dock-menu"}
+				id="dock-social"
+				ref={socialMenuRef}
+				role="menu"
+				aria-label="Social links"
+			>
+				{socialLinks.map((link) => (
+					<a
+						key={link.label}
+						href={link.url}
+						role="menuitem"
+						target="_blank"
+						rel="noopener noreferrer"
+						onClick={() => setOpenMenu(null)}
+					>
+						{link.label} <span className="idx">↗</span>
 					</a>
 				))}
 			</div>

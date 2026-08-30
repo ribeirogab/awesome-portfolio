@@ -56,6 +56,14 @@ export const owner = {
 
 export const githubUrl = "https://github.com/ribeirogab";
 
+export const socialLinks: EntryLink[] = [
+	{ label: "GitHub", url: githubUrl },
+	{ label: "Instagram", url: "https://example.com" },
+	{ label: "X", url: "https://example.com" },
+	{ label: "LinkedIn", url: "https://example.com" },
+	{ label: "YouTube", url: "https://example.com" },
+];
+
 export const experiences: Experience[] = [
 	{
 		id: "exp-1",
