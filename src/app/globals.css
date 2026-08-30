@@ -18,9 +18,6 @@
 	--fade-from: rgba(250, 248, 243, 0);
 	--fade-to: #faf8f3;
 	--focus: #211e19;
-	--portrait-ink: #262218;
-	--portrait-mid: #6b6353;
-	--portrait-soft: #b3aa97;
 	--duration-fast: 130ms;
 	--duration-hover: 150ms;
 	--duration-menu: 160ms;
@@ -48,9 +45,6 @@
 	--fade-from: rgba(19, 18, 16, 0);
 	--fade-to: #131210;
 	--focus: #ece8dd;
-	--portrait-ink: #e8e2d2;
-	--portrait-mid: #9a9280;
-	--portrait-soft: #4a4536;
 	color-scheme: dark;
 }
 
@@ -115,18 +109,15 @@ button {
 .hero {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	text-align: center;
 }
 
-.portrait-wrap {
-	width: 145px;
-	height: 205px;
-	margin-bottom: 28px;
-}
-
-.portrait-wrap svg {
-	display: block;
-	width: 100%;
-	height: 100%;
+.hero .greeting {
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--ink-soft);
+	margin-bottom: 10px;
 }
 
 .hero h1 {
@@ -138,21 +129,22 @@ button {
 	margin-bottom: 6px;
 }
 
-.hero .role {
-	font-size: 15px;
-	font-weight: 600;
-	color: var(--ink-soft);
-	margin-bottom: 22px;
+.hero .definition {
+	font-size: 14px;
+	color: var(--muted);
+	letter-spacing: 0.02em;
+	margin-bottom: 26px;
+}
+
+.sep {
+	color: var(--faint);
+	margin: 0 4px;
 }
 
 .hero .intro {
 	color: var(--muted);
-	max-width: 56ch;
-}
-
-.hero .intro strong {
-	color: var(--ink-soft);
-	font-weight: 600;
+	align-self: stretch;
+	text-align: left;
 }
 
 .section-gap {
@@ -379,43 +371,11 @@ button {
 	padding: 4px 0;
 }
 
-.stack-group li svg {
+.stack-group svg {
 	width: 15px;
 	height: 15px;
 	color: var(--faint);
 	flex: none;
-}
-
-.achievement {
-	border: 1px solid var(--line-strong);
-	border-radius: 14px;
-	background: var(--card);
-	box-shadow: var(--shadow);
-	padding: 36px 38px;
-	min-height: 232px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 12px;
-}
-
-.achievement .year {
-	font-size: 12px;
-	font-weight: 700;
-	color: var(--faint);
-	font-variant-numeric: tabular-nums;
-}
-
-.achievement h3 {
-	font-size: 20px;
-	font-weight: 800;
-	letter-spacing: -0.01em;
-}
-
-.achievement p {
-	color: var(--muted);
-	font-size: 14px;
-	max-width: 48ch;
 }
 
 .statement {
@@ -612,10 +572,6 @@ button {
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 20px;
-	}
-
-	.achievement {
-		padding: 28px 26px;
 	}
 
 	.dock {

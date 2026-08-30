@@ -48,10 +48,11 @@ export type StackGroup = {
 
 export const owner = {
 	name: "John Doe",
-	role: "Creative Developer",
+	greeting: "Hi, I'm",
+	role: "creative developer",
 	introLead:
 		"I build expressive interfaces where typography, motion, and engineering meet. Over the last nine years I have shipped design systems, editorial sites, and interactive tools for small studios and independent teams.",
-	introAvailability: "Currently available for remote work.",
+	availability: "available for work",
 };
 
 export const githubUrl = "https://github.com/ribeirogab";
@@ -100,6 +101,31 @@ export const experiences: Experience[] = [
 		description:
 			"My first studio role, split between client sites and internal experiments. I turned static art boards into living pages, built a small CSS toolkit the studio still uses, and learned the discipline of shipping on a deadline without letting craft slip. Two of the campaign pages I built were featured in independent design showcases during my time there.",
 		links: [{ label: "Website", url: "https://example.com" }],
+	},
+];
+
+export type Education = {
+	id: string;
+	degree: string;
+	institution: string;
+	logo: string;
+	period: string;
+};
+
+export const education: Education[] = [
+	{
+		id: "edu-1",
+		degree: "BA in Design & Technology",
+		institution: "Aldergrove University",
+		logo: "/logos/aldergrove-university.svg",
+		period: "2012 — 2016",
+	},
+	{
+		id: "edu-2",
+		degree: "Certificate in Interactive Media",
+		institution: "Harbor School of Arts",
+		logo: "/logos/harbor-school.svg",
+		period: "2011 — 2012",
 	},
 ];
 
@@ -191,13 +217,6 @@ export const stackGroups: StackGroup[] = [
 		],
 	},
 ];
-
-export const achievement = {
-	year: "2023",
-	title: "Independent Makers Grant",
-	description:
-		"Awarded a year-long grant supporting independent tool builders, in recognition of Paper Trail and its approach to calm, ad-free reading on the open web.",
-};
 
 export const statement = {
 	before: "I believe good software feels ",

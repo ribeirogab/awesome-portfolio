@@ -1,12 +1,11 @@
 import { FiArrowUpRight } from "react-icons/fi";
 import { Dock } from "@/components/dock";
 import { ExpandableEntry } from "@/components/expandable-entry";
-import { Portrait } from "@/components/portrait";
 import { StackIcon } from "@/components/stack-icon";
 import {
-	achievement,
 	contact,
 	contributionNotice,
+	education,
 	experiences,
 	githubUrl,
 	learningNote,
@@ -21,12 +20,16 @@ export default function Home() {
 		<>
 			<div className="page">
 				<header className="hero" id="top">
-					<Portrait />
+					<p className="greeting">{owner.greeting}</p>
 					<h1>{owner.name}</h1>
-					<p className="role">{owner.role}</p>
-					<p className="intro">
-						{owner.introLead} <strong>{owner.introAvailability}</strong>
+					<p className="definition">
+						{owner.role}{" "}
+						<span className="sep" aria-hidden="true">
+							•
+						</span>{" "}
+						{owner.availability}
 					</p>
+					<p className="intro">{owner.introLead}</p>
 				</header>
 
 				<section
@@ -56,6 +59,28 @@ export default function Home() {
 
 				<section
 					className="section-gap"
+					id="education"
+					aria-labelledby="education-label"
+				>
+					<div className="section-head">
+						<h2 className="label" id="education-label">
+							Education
+						</h2>
+					</div>
+					{education.map((entry) => (
+						<ExpandableEntry
+							key={entry.id}
+							descriptionId={entry.id}
+							title={entry.degree}
+							organization={entry.institution}
+							logo={entry.logo}
+							period={entry.period}
+						/>
+					))}
+				</section>
+
+				<section
+					className="section-gap"
 					id="projects"
 					aria-labelledby="projects-label"
 				>
@@ -74,17 +99,6 @@ export default function Home() {
 							links={project.links}
 						/>
 					))}
-				</section>
-
-				<section className="section-gap" aria-labelledby="contrib-label">
-					<div className="section-head">
-						<h2 className="label" id="contrib-label">
-							Contributions
-						</h2>
-					</div>
-					<div className="wip-block">
-						<p>{contributionNotice}</p>
-					</div>
 				</section>
 
 				<section
@@ -114,16 +128,14 @@ export default function Home() {
 					</div>
 				</section>
 
-				<section className="section-gap" aria-labelledby="achievement-label">
+				<section className="section-gap" aria-labelledby="contrib-label">
 					<div className="section-head">
-						<h2 className="label" id="achievement-label">
-							Achievement
+						<h2 className="label" id="contrib-label">
+							GitHub Contributions
 						</h2>
 					</div>
-					<div className="achievement">
-						<p className="year">{achievement.year}</p>
-						<h3>{achievement.title}</h3>
-						<p>{achievement.description}</p>
+					<div className="wip-block">
+						<p>{contributionNotice}</p>
 					</div>
 				</section>
 

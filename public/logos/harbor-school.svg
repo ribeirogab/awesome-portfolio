@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <title>Harbor School of Arts</title>
+  <rect width="48" height="48" rx="12" fill="#faf8f3"/>
+  <rect width="48" height="48" rx="12" fill="none" stroke="#211e19" stroke-width="2"/>
+  <circle cx="24" cy="13" r="3.5" fill="none" stroke="#211e19" stroke-width="2.8"/>
+  <path d="M24 17v18M14 24h20M24 35c-6 0-11-4-12-9M24 35c6 0 11-4 12-9" fill="none" stroke="#211e19" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

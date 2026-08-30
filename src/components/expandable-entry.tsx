@@ -11,7 +11,7 @@ type ExpandableEntryProps = {
 	logo?: string;
 	period?: string;
 	technology?: string;
-	description: string;
+	description?: string;
 	links?: EntryLink[];
 };
 
@@ -49,37 +49,41 @@ export function ExpandableEntry({
 				{period ? <p className="entry-meta">{period}</p> : null}
 				{technology ? <span className="tech-tag">{technology}</span> : null}
 			</div>
-			<div className="entry-desc" id={descriptionId}>
-				<p>{description}</p>
-				{links?.length ? (
-					<nav className="entry-links" aria-label={`${title} links`}>
-						{links.map((link) => (
-							<a
-								key={link.label}
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								tabIndex={open ? undefined : -1}
-							>
-								{link.label}
-								<span aria-hidden="true">↗</span>
-							</a>
-						))}
-					</nav>
-				) : null}
-			</div>
-			<button
-				className="view-more"
-				type="button"
-				aria-expanded={open}
-				aria-controls={descriptionId}
-				onClick={() => setOpen((value) => !value)}
-			>
-				{open ? "View less" : "View more"}{" "}
-				<span className="chev" aria-hidden="true">
-					▾
-				</span>
-			</button>
+			{description ? (
+				<>
+					<div className="entry-desc" id={descriptionId}>
+						<p>{description}</p>
+						{links?.length ? (
+							<nav className="entry-links" aria-label={`${title} links`}>
+								{links.map((link) => (
+									<a
+										key={link.label}
+										href={link.url}
+										target="_blank"
+										rel="noopener noreferrer"
+										tabIndex={open ? undefined : -1}
+									>
+										{link.label}
+										<span aria-hidden="true">↗</span>
+									</a>
+								))}
+							</nav>
+						) : null}
+					</div>
+					<button
+						className="view-more"
+						type="button"
+						aria-expanded={open}
+						aria-controls={descriptionId}
+						onClick={() => setOpen((value) => !value)}
+					>
+						{open ? "View less" : "View more"}{" "}
+						<span className="chev" aria-hidden="true">
+							▾
+						</span>
+					</button>
+				</>
+			) : null}
 		</article>
 	);
 }
