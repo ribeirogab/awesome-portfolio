@@ -20,6 +20,9 @@ importers:
       react-icons:
         specifier: 5.7.0
         version: 5.7.0(react@19.2.8)
+      zod:
+        specifier: ^4.5.2
+        version: 4.5.2
     devDependencies:
       '@biomejs/biome':
         specifier: 2.5.11
@@ -761,8 +764,8 @@ packages:
     engines: {node: '>= 14.6'}
     hasBin: true
 
-  zod@4.5.1:
-    resolution: {integrity: sha512-P3GqeAEOEDqKvafVGLezbg+39YW/ze4xrD4qdS0adOY8eoI3zfjv1PQM4UwQzgT8mZKXEbqtVt8K+ZKGqkMFKg==}
+  zod@4.5.2:
+    resolution: {integrity: sha512-XkYXCol10+ba/6F/cueWV+TezUeOqXW0hdeJt5CdXjTYeAgAQg5N03RQdJ80mhfFE72+pblvYMW4wy2Qp4Qbrg==}
 
 snapshots:
 
@@ -1147,7 +1150,7 @@ snapshots:
       tinyglobby: 0.2.17
       unbash: 4.0.10
       yaml: 2.9.0
-      zod: 4.5.1
+      zod: 4.5.2
 
   nanoid@3.3.18: {}
 
@@ -1314,4 +1317,4 @@ snapshots:
 
   yaml@2.9.0: {}
 
-  zod@4.5.1: {}
+  zod@4.5.2: {}

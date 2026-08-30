@@ -10,3 +10,4 @@ coverage/
 *.tsbuildinfo
 .DS_Store
 tmp/
+.claude/

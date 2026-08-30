@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { StackIconName } from "@/data/portfolio";
+import type { StackIconName } from "@/schema/portfolio";
 
 const paths: Record<StackIconName, ReactNode> = {
 	react: (

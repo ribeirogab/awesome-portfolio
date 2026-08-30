@@ -1,7 +1,6 @@
 "use client";
 
 import { type MouseEvent, useEffect, useState } from "react";
-import { contributionNotice, githubUsername } from "@/data/portfolio";
 
 type ContributionDay = {
 	date: string;
@@ -78,7 +77,15 @@ function formatDay(date: string, count: number): string {
 	return `${count} contributions on ${label}`;
 }
 
-export function ContributionGraph() {
+type ContributionGraphProps = {
+	username: string;
+	errorNotice: string;
+};
+
+export function ContributionGraph({
+	username,
+	errorNotice,
+}: ContributionGraphProps) {
 	const [state, setState] = useState<GraphState>({ status: "loading" });
 	const [tooltip, setTooltip] = useState<Tooltip | null>(null);
 
@@ -100,11 +107,8 @@ export function ContributionGraph() {
 	};
 
 	useEffect(() => {
-		const controller = new AbortController();
-		fetch(
-			`https://github-contributions-api.jogruber.de/v4/${githubUsername}?y=last`,
-			{ signal: controller.signal },
-		)
+		let active = true;
+		fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error(String(response.status));
@@ -116,29 +120,29 @@ export function ContributionGraph() {
 					throw new Error("empty");
 				}
 				const { offset, weeks } = toWeeks(data.contributions);
-				setState({
-					status: "ready",
-					total: Object.values(data.total)[0] ?? 0,
-					offset,
-					weeks,
-				});
+				if (active) {
+					setState({
+						status: "ready",
+						total: Object.values(data.total)[0] ?? 0,
+						offset,
+						weeks,
+					});
+				}
 			})
-			.catch((error: Error) => {
-				if (error.name !== "AbortError") {
+			.catch(() => {
+				if (active) {
 					setState({ status: "error" });
 				}
 			});
-		return () => controller.abort();
-	}, []);
+		return () => {
+			active = false;
+		};
+	}, [username]);
 
 	if (state.status !== "ready") {
 		return (
 			<div className="wip-block">
-				<p>
-					{state.status === "loading"
-						? "Loading activity…"
-						: contributionNotice}
-				</p>
+				<p>{state.status === "loading" ? "Loading activity…" : errorNotice}</p>
 			</div>
 		);
 	}

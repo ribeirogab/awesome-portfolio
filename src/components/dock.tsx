@@ -2,18 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import { FiArrowUp, FiAtSign, FiMenu, FiMoon, FiSun } from "react-icons/fi";
-import { socialLinks } from "@/data/portfolio";
+import type { EntryLink } from "@/schema/portfolio";
 
-const sections = [
-	{ href: "#experience", label: "Experience", index: "01" },
-	{ href: "#projects", label: "Projects", index: "02" },
-	{ href: "#stack", label: "Stack", index: "03" },
-	{ href: "#contact", label: "Contact", index: "04" },
-];
+type NavItem = {
+	href: string;
+	label: string;
+	index: string;
+};
 
 type MenuName = "sections" | "social";
 
-export function Dock() {
+type DockProps = {
+	navItems: NavItem[];
+	socialLinks: EntryLink[];
+};
+
+export function Dock({ navItems, socialLinks }: DockProps) {
 	const [openMenu, setOpenMenu] = useState<MenuName | null>(null);
 	const sectionsMenuRef = useRef<HTMLDivElement>(null);
 	const sectionsButtonRef = useRef<HTMLButtonElement>(null);
@@ -124,14 +128,14 @@ export function Dock() {
 				role="menu"
 				aria-label="Sections"
 			>
-				{sections.map((section) => (
+				{navItems.map((item) => (
 					<a
-						key={section.href}
-						href={section.href}
+						key={item.href}
+						href={item.href}
 						role="menuitem"
 						onClick={() => setOpenMenu(null)}
 					>
-						{section.label} <span className="idx">{section.index}</span>
+						{item.label} <span className="idx">{item.index}</span>
 					</a>
 				))}
 			</div>

@@ -2,6 +2,7 @@
 	"name": "awesome-portfolio",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"packageManager": "pnpm@11.24.0",
 	"engines": {
 		"node": ">=24.20.0 <25",
@@ -11,15 +12,17 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"check": "biome check .",
+		"check": "biome check . && node scripts/check-portfolio.ts",
 		"check:fix": "biome check --write .",
+		"check:portfolio": "node scripts/check-portfolio.ts",
 		"knip": "knip"
 	},
 	"dependencies": {
 		"next": "^16.3.3",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",
-		"react-icons": "5.7.0"
+		"react-icons": "5.7.0",
+		"zod": "^4.5.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.11",

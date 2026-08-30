@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
+import { portfolio } from "@/data/portfolio";
 import "./globals.css";
 
 const manrope = localFont({
@@ -18,9 +19,8 @@ const cabinSketch = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "John Doe — Creative Developer",
-	description:
-		"Portfolio of John Doe, a creative developer building expressive interfaces where typography, motion, and engineering meet.",
+	title: portfolio.site.title,
+	description: portfolio.site.description,
 };
 
 const themeInitializer =

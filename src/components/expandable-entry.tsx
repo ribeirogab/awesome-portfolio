@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import type { EntryLink } from "@/data/portfolio";
+import type { EntryLink } from "@/schema/portfolio";
 
 type ExpandableEntryProps = {
 	descriptionId: string;
 	title: string;
-	organization?: string;
+	subtitle?: string;
 	logo?: string;
 	period?: string;
-	technology?: string;
+	tag?: string;
 	description?: string;
 	links?: EntryLink[];
 };
@@ -18,10 +18,10 @@ type ExpandableEntryProps = {
 export function ExpandableEntry({
 	descriptionId,
 	title,
-	organization,
+	subtitle,
 	logo,
 	period,
-	technology,
+	tag,
 	description,
 	links,
 }: ExpandableEntryProps) {
@@ -43,11 +43,11 @@ export function ExpandableEntry({
 					) : null}
 					<div>
 						<h3 className="entry-title">{title}</h3>
-						{organization ? <p className="entry-org">{organization}</p> : null}
+						{subtitle ? <p className="entry-org">{subtitle}</p> : null}
 					</div>
 				</div>
 				{period ? <p className="entry-meta">{period}</p> : null}
-				{technology ? <span className="tech-tag">{technology}</span> : null}
+				{tag ? <span className="tech-tag">{tag}</span> : null}
 			</div>
 			{description ? (
 				<>
