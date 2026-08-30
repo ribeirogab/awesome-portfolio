@@ -2,6 +2,8 @@
 
 A single-page developer portfolio where all content lives in [`portfolio.json`](portfolio.json). To make it yours, edit the JSON. No code changes required.
 
+**Demo:** https://awesome-portfolio.57vjct26wg.workers.dev
+
 ## Getting started
 
 ```bash

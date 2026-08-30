@@ -12,6 +12,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
+		"deploy": "pnpm check && pnpm build && wrangler deploy",
 		"check": "biome check . && node scripts/check-portfolio.ts",
 		"check:fix": "biome check --write .",
 		"check:portfolio": "node scripts/check-portfolio.ts",
@@ -30,6 +31,7 @@
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.5",
 		"knip": "6.33.0",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"wrangler": "^4.127.1"
 	}
 }
