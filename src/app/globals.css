@@ -166,23 +166,6 @@ button {
 	margin-bottom: 26px;
 }
 
-.section-head .head-link {
-	font-size: 12px;
-	font-weight: 600;
-	color: var(--muted);
-	text-decoration: none;
-	border-bottom: 1px solid var(--line-strong);
-	padding-bottom: 1px;
-	transition:
-		color var(--duration-hover) ease,
-		border-color var(--duration-hover) ease;
-}
-
-.section-head .head-link:hover {
-	color: var(--ink);
-	border-color: var(--ink-soft);
-}
-
 .entry {
 	padding: 20px 0;
 	border-top: 1px solid var(--line);

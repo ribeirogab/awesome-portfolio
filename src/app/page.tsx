@@ -63,9 +63,6 @@ export default function Home() {
 						<h2 className="label" id="projects-label">
 							Selected Projects
 						</h2>
-						<a className="head-link" href="#projects">
-							All projects ↓
-						</a>
 					</div>
 					{projects.map((project) => (
 						<ExpandableEntry
