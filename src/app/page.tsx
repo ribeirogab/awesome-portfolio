@@ -141,8 +141,12 @@ function PortfolioSection({ section }: { section: Section }) {
 						<a
 							className="contact-btn"
 							href={section.url}
-							target="_blank"
-							rel="noopener noreferrer"
+							target={section.url.startsWith("mailto:") ? undefined : "_blank"}
+							rel={
+								section.url.startsWith("mailto:")
+									? undefined
+									: "noopener noreferrer"
+							}
 						>
 							{section.action}
 							<FiArrowUpRight aria-hidden="true" />
