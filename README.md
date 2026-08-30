@@ -2,8 +2,6 @@
 
 A single-page developer portfolio where all content lives in [`portfolio.json`](portfolio.json). To make it yours, edit the JSON. No code changes required.
 
-Built with Next.js 16, React 19, and TypeScript. Content is validated with a Zod schema, so mistakes fail fast with a clear message.
-
 ## Getting started
 
 ```bash
