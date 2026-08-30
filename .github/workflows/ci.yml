@@ -1,5 +1,7 @@
 name: ci
 
+run-name: "ci: pr #${{ github.event.pull_request.number }} → ${{ github.event.pull_request.base.ref }} by @${{ github.actor }}"
+
 on:
   pull_request:
     branches: [main]

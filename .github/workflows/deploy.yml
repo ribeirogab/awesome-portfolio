@@ -1,5 +1,7 @@
 name: deploy
 
+run-name: "deploy by @${{ github.actor }}"
+
 on:
   push:
     branches: [main]
