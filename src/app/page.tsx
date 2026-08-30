@@ -1,13 +1,14 @@
 import { FiArrowUpRight } from "react-icons/fi";
+import { ContributionGraph } from "@/components/contribution-graph";
 import { Dock } from "@/components/dock";
 import { ExpandableEntry } from "@/components/expandable-entry";
 import { StackIcon } from "@/components/stack-icon";
 import {
 	contact,
-	contributionNotice,
 	education,
 	experiences,
 	githubUrl,
+	githubUsername,
 	learningNote,
 	owner,
 	projects,
@@ -133,10 +134,16 @@ export default function Home() {
 						<h2 className="label" id="contrib-label">
 							GitHub Contributions
 						</h2>
+						<a
+							className="head-link"
+							href={githubUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							@{githubUsername} ↗
+						</a>
 					</div>
-					<div className="wip-block">
-						<p>{contributionNotice}</p>
-					</div>
+					<ContributionGraph />
 				</section>
 
 				<section className="section-gap" aria-label="Personal statement">

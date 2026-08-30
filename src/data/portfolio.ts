@@ -55,7 +55,9 @@ export const owner = {
 	availability: "available for work",
 };
 
-export const githubUrl = "https://github.com/ribeirogab";
+export const githubUsername = "ribeirogab";
+
+export const githubUrl = `https://github.com/${githubUsername}`;
 
 export const socialLinks: EntryLink[] = [
 	{ label: "GitHub", url: githubUrl },
