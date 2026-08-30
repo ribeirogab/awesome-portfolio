@@ -5,7 +5,44 @@ on:
     branches: [main]
 
 jobs:
+  ci-status:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+      pull-requests: read
+    outputs:
+      passed: ${{ steps.status.outputs.passed }}
+    steps:
+      - id: status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          passed=false
+          head_sha=$(gh api "repos/$REPO/commits/$SHA/pulls" --jq '.[0].head.sha' 2>/dev/null || true)
+          if [ -n "$head_sha" ]; then
+            runs=$(gh api "repos/$REPO/actions/runs?head_sha=$head_sha" \
+              --jq '[.workflow_runs[] | select(.name == "ci")]')
+            if [ "$(echo "$runs" | jq '[.[] | select(.conclusion == "success")] | length')" -gt 0 ]; then
+              passed=true
+            fi
+            for run_id in $(echo "$runs" | jq -r '.[] | select(.status != "completed") | .id'); do
+              echo "canceling stale ci run $run_id"
+              gh api -X POST "repos/$REPO/actions/runs/$run_id/cancel" || true
+            done
+          fi
+          echo "passed=$passed" >> "$GITHUB_OUTPUT"
+
+  ci:
+    needs: ci-status
+    if: needs.ci-status.outputs.passed == 'false'
+    uses: ./.github/workflows/ci.yml
+
   deploy:
+    needs: [ci-status, ci]
+    if: ${{ !cancelled() && (needs.ci-status.outputs.passed == 'true' || needs.ci.result == 'success') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
