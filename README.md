@@ -1,4 +1,4 @@
-# Portfolio
+# Awesome Portfolio
 
 A single-page developer portfolio where all content lives in [`portfolio.json`](portfolio.json). To make it yours, edit the JSON. No code changes required.
 
