@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <title>Atelier Zero</title>
+  <rect width="48" height="48" rx="24" fill="#55503f"/>
+  <ellipse cx="24" cy="24" rx="9" ry="13" fill="none" stroke="#faf8f3" stroke-width="3"/>
+  <path d="M15 33L33 15" stroke="#faf8f3" stroke-width="3" stroke-linecap="round"/>
+</svg>

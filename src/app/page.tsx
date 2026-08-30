@@ -45,8 +45,10 @@ export default function Home() {
 							descriptionId={experience.id}
 							title={experience.title}
 							organization={experience.organization}
+							logo={experience.logo}
 							period={experience.period}
 							description={experience.description}
+							links={experience.links}
 						/>
 					))}
 					<aside className="aside-note">{learningNote}</aside>
@@ -72,6 +74,7 @@ export default function Home() {
 							title={project.title}
 							technology={project.technology}
 							description={project.description}
+							links={project.links}
 						/>
 					))}
 				</section>

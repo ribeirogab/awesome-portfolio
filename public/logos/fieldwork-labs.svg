@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <title>Fieldwork Labs</title>
+  <rect width="48" height="48" rx="12" fill="#faf8f3"/>
+  <rect width="48" height="48" rx="12" fill="none" stroke="#211e19" stroke-width="2"/>
+  <path d="M15 34V14h19M15 24h13" stroke="#211e19" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+</svg>

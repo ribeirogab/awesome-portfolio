@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <title>Northstar Studio</title>
+  <rect width="48" height="48" rx="12" fill="#211e19"/>
+  <path d="M24 9l3.2 11.8L39 24l-11.8 3.2L24 39l-3.2-11.8L9 24l11.8-3.2Z" fill="#faf8f3"/>
+  <circle cx="24" cy="24" r="3" fill="#211e19"/>
+</svg>
