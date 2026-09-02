@@ -9,11 +9,19 @@ type ArticleListProps = {
 	layout?: ArticleListLayout;
 };
 
-function ArticleTitle({ article }: { article: Article }) {
+type HeadingTag = "h2" | "h3";
+
+function ArticleTitle({
+	article,
+	heading: Heading,
+}: {
+	article: Article;
+	heading: HeadingTag;
+}) {
 	return (
-		<h3 className="entry-title">
+		<Heading className="entry-title">
 			<Link href={`/articles/${article.slug}`}>{article.title}</Link>
-		</h3>
+		</Heading>
 	);
 }
 
@@ -39,10 +47,12 @@ function RailRow({
 				{showYear ? (
 					<span className="article-year">{yearOf(article.date)}</span>
 				) : null}
-				<span className="entry-meta">{formatDay(article.date)}</span>
+				<span className="entry-meta">
+					<time dateTime={article.date}>{formatDay(article.date)}</time>
+				</span>
 			</div>
 			<div className="article-main">
-				<ArticleTitle article={article} />
+				<ArticleTitle article={article} heading="h2" />
 				<p className="article-excerpt">{article.excerpt}</p>
 				<ArticleTags article={article} />
 			</div>
@@ -54,8 +64,10 @@ function InlineRow({ article }: { article: Article }) {
 	return (
 		<article className="article-row article-row-inline">
 			<div className="article-line">
-				<ArticleTitle article={article} />
-				<span className="entry-meta">{formatShortDate(article.date)}</span>
+				<ArticleTitle article={article} heading="h3" />
+				<span className="entry-meta">
+					<time dateTime={article.date}>{formatShortDate(article.date)}</time>
+				</span>
 			</div>
 			<p className="article-excerpt">{article.excerpt}</p>
 			<ArticleTags article={article} />

@@ -4,19 +4,24 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { PageHead } from "@/components/page-head";
 import { loadArticles } from "@/content/articles";
 import { portfolio } from "@/data/portfolio";
+import { JsonLd } from "@/seo/json-ld";
+import { pageMetadata } from "@/seo/metadata";
+import { articlesStructuredData } from "@/seo/structured-data";
 
 const { owner, pages } = portfolio;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+	path: "/articles",
 	title: `${pages.articles.title} — ${owner.name}`,
 	description: pages.articles.description,
-};
+});
 
 export default function ArticlesPage() {
 	const articles = loadArticles();
 
 	return (
 		<div className="page">
+			<JsonLd data={articlesStructuredData(articles)} />
 			<Breadcrumb
 				items={[
 					{ label: owner.name, href: "/" },

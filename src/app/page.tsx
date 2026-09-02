@@ -1,3 +1,4 @@
+import { preconnect } from "react-dom";
 import { FiArrowUpRight } from "react-icons/fi";
 import { ArticleList } from "@/components/article-list";
 import { ContributionGraph } from "@/components/contribution-graph";
@@ -9,6 +10,10 @@ import { findFeaturedProjects } from "@/content/projects";
 import { portfolio } from "@/data/portfolio";
 import type { Article } from "@/schema/article";
 import type { Section } from "@/schema/portfolio";
+import { JsonLd } from "@/seo/json-ld";
+import { homeStructuredData } from "@/seo/structured-data";
+
+const contributionsApiOrigin = "https://github-contributions-api.jogruber.de";
 
 function renderEmphasis(text: string) {
 	return text
@@ -120,6 +125,7 @@ function PortfolioSection({
 				</section>
 			);
 		case "github-contributions":
+			preconnect(contributionsApiOrigin);
 			return (
 				<section
 					className="section-gap"
@@ -187,6 +193,7 @@ export default function Home() {
 
 	return (
 		<div className="page">
+			<JsonLd data={homeStructuredData()} />
 			<header className="hero" id="top">
 				<p className="greeting">{owner.greeting}</p>
 				<h1>{owner.name}</h1>

@@ -5,8 +5,12 @@ import { ArticleBody } from "@/components/article-body";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { loadArticles } from "@/content/articles";
 import { formatDay, formatLongDate, yearOf } from "@/content/dates";
+import { wordCount } from "@/content/markdown";
 import { portfolio } from "@/data/portfolio";
 import type { Article } from "@/schema/article";
+import { JsonLd } from "@/seo/json-ld";
+import { pageMetadata } from "@/seo/metadata";
+import { articleStructuredData } from "@/seo/structured-data";
 
 type ArticlePageProps = {
 	params: Promise<{ slug: string }>;
@@ -26,10 +30,12 @@ export async function generateMetadata({
 	if (!article) {
 		return {};
 	}
-	return {
+	return pageMetadata({
+		path: `/articles/${article.slug}`,
 		title: `${article.title} — ${portfolio.owner.name}`,
 		description: article.excerpt,
-	};
+		article: { publishedTime: article.date, tag: article.tag },
+	});
 }
 
 function AdjacentLink({
@@ -49,8 +55,10 @@ function AdjacentLink({
 			<span className="label">{label}</span>
 			<span className="entry-title">{article.title}</span>
 			<span className="entry-meta">
-				{formatDay(article.date)}, {yearOf(article.date)} ·{" "}
-				{article.readingTime}
+				<time dateTime={article.date}>
+					{formatDay(article.date)}, {yearOf(article.date)}
+				</time>{" "}
+				· {article.readingTime}
 			</span>
 		</Link>
 	);
@@ -69,6 +77,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
 	return (
 		<div className="page">
+			<JsonLd data={articleStructuredData(article, wordCount(article.html))} />
 			<Breadcrumb
 				items={[
 					{ label: portfolio.owner.name, href: "/" },
@@ -76,19 +85,25 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 					{ label: article.title },
 				]}
 			/>
-			<header className="article-head">
-				<div className="meta-row">
-					<span className="tech-tag">{article.tag}</span>
-					<span>{formatLongDate(article.date)}</span>
-					<span className="dot" aria-hidden="true">
-						·
-					</span>
-					<span>{article.readingTime}</span>
-				</div>
-				<h1>{article.title}</h1>
-				<p className="article-lede">{article.excerpt}</p>
-			</header>
-			<ArticleBody html={article.html} />
+			<article>
+				<header className="article-head">
+					<div className="meta-row">
+						<span className="tech-tag">{article.tag}</span>
+						<span>
+							<time dateTime={article.date}>
+								{formatLongDate(article.date)}
+							</time>
+						</span>
+						<span className="dot" aria-hidden="true">
+							·
+						</span>
+						<span>{article.readingTime}</span>
+					</div>
+					<h1>{article.title}</h1>
+					<p className="article-lede">{article.excerpt}</p>
+				</header>
+				<ArticleBody html={article.html} />
+			</article>
 			<nav className="adjacent section-gap" aria-label="Adjacent articles">
 				<AdjacentLink label="Previous" article={older} align="start" />
 				<AdjacentLink label="Next" article={newer} align="end" />
