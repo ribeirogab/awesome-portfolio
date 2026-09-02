@@ -13,14 +13,15 @@ Light theme:
 - **Warm Paper Cream (#faf8f3)**: Page background. Sets the printed-paper mood.
 - **Warm Near-Black Ink (#211e19)**: Primary text, headings, focus rings, and tooltip background. The "ink" of the system.
 - **Olive-Brown Soft Ink (#55503f)**: Secondary text: greetings, statement body, dock icons, "view more" actions.
-- **Warm Stone Gray (#7d776b)**: Muted body text: descriptions, intros, subtitles, secondary links.
-- **Pale Taupe (#a29b8d)**: Faintest text tier: uppercase labels, metadata, dates, tags, stack icons.
+- **Warm Stone Gray (#777166)**: Muted body text: descriptions, intros, subtitles, secondary links.
+- **Deep Taupe (#797163)**: Faintest text tier: uppercase labels, metadata, dates, tags, stack icons. It sits one notch below the muted tier in warmth rather than lightness, because both tiers must keep a 4.5:1 contrast on the paper ground.
 - **Parchment Hairline (#e5e0d3)** and **Deeper Parchment (#d8d2c2)**: 1px separators and borders. The strong variant outlines interactive surfaces and logos.
 - **Warm Off-White Card (#fffdf9)**: Elevated surface color for cards and logo tiles.
 - **Charcoal Gradient (#35322b to #17150f)** with **Warm Ivory text (#f5f2ea)**: The single high-contrast primary action (contact button).
+- **Contrast floor**: every text tier meets WCAG AA (4.5:1) against its ground in both themes. Do not lighten the muted or faint tiers below the values above.
 - **Olive Heat Scale (#ede8da, #d5c9ab, #b0a077, #7d6f4e, #423a28)**: Contribution heatmap, from empty to most active. Khaki tones instead of the usual green.
 
-Dark theme mirrors every role with warm values: background #131210, ink #ece8dd, soft ink #c9c3b4, muted #97917f, faint #6e6858, hairlines #29261f / #383428, card #191712, and the primary button flips to a light ivory gradient (#efeadd to #cfc8b6) with dark text (#17150f). The heat scale inverts toward golden (#24211b up to #e3d5a8).
+Dark theme mirrors every role with warm values: background #131210, ink #ece8dd, soft ink #c9c3b4, muted #97917f, faint #87806c, hairlines #29261f / #383428, card #191712, and the primary button flips to a light ivory gradient (#efeadd to #cfc8b6) with dark text (#17150f). The heat scale inverts toward golden (#24211b up to #e3d5a8).
 
 ## 3. Typography Rules
 
