@@ -1,13 +1,15 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
+import { articlesDirectory, loadArticles } from "../src/content/articles.ts";
+import { missingProjectIds } from "../src/content/projects.ts";
 import { type Portfolio, portfolioSchema } from "../src/schema/portfolio.ts";
 
 const root = join(import.meta.dirname, "..");
 const portfolioPath = join(root, "portfolio.json");
 
 function fail(message: string): never {
-	console.error(`✗ portfolio.json: ${message}`);
+	console.error(`✗ ${message}`);
 	process.exit(1);
 }
 
@@ -16,19 +18,19 @@ function parsePortfolio(): Portfolio {
 	try {
 		raw = readFileSync(portfolioPath, "utf8");
 	} catch {
-		fail("file not found at the repository root");
+		fail("portfolio.json: file not found at the repository root");
 	}
 
 	let data: unknown;
 	try {
 		data = JSON.parse(raw);
 	} catch (error) {
-		fail(`invalid JSON — ${(error as Error).message}`);
+		fail(`portfolio.json: invalid JSON — ${(error as Error).message}`);
 	}
 
 	const result = portfolioSchema.safeParse(data);
 	if (!result.success) {
-		fail(`schema errors\n${z.prettifyError(result.error)}`);
+		fail(`portfolio.json: schema errors\n${z.prettifyError(result.error)}`);
 	}
 	return result.data;
 }
@@ -42,6 +44,9 @@ function checkUniqueIds(portfolio: Portfolio): string[] {
 		}
 		seen.add(id);
 	};
+	for (const project of portfolio.projects) {
+		register(project.id, "project");
+	}
 	for (const section of portfolio.sections) {
 		register(section.id, `section "${section.type}"`);
 		if (section.type === "entries") {
@@ -73,15 +78,47 @@ function checkLocalLogos(portfolio: Portfolio): string[] {
 	return problems;
 }
 
+function checkFeaturedProjects(portfolio: Portfolio): string[] {
+	const problems: string[] = [];
+	for (const section of portfolio.sections) {
+		if (section.type !== "projects") {
+			continue;
+		}
+		for (const id of missingProjectIds(portfolio, section.featured)) {
+			problems.push(
+				`featured project "${id}" (section "${section.id}") not found in projects`,
+			);
+		}
+	}
+	return problems;
+}
+
+function checkArticles(): number {
+	if (!existsSync(join(root, articlesDirectory))) {
+		fail(`${articlesDirectory}: directory not found`);
+	}
+	try {
+		return loadArticles(root).length;
+	} catch (error) {
+		fail(`${articlesDirectory}/${(error as Error).message}`);
+	}
+}
+
 const portfolio = parsePortfolio();
-const problems = [...checkUniqueIds(portfolio), ...checkLocalLogos(portfolio)];
+const problems = [
+	...checkUniqueIds(portfolio),
+	...checkLocalLogos(portfolio),
+	...checkFeaturedProjects(portfolio),
+];
 
 if (problems.length > 0) {
 	fail(
-		`invariant errors\n${problems.map((problem) => `  - ${problem}`).join("\n")}`,
+		`portfolio.json: invariant errors\n${problems.map((problem) => `  - ${problem}`).join("\n")}`,
 	);
 }
 
+const articleCount = checkArticles();
+
 console.log(
-	`✓ portfolio.json is valid — ${portfolio.sections.length} sections, owner "${portfolio.owner.name}"`,
+	`✓ content is valid — ${portfolio.sections.length} sections, ${portfolio.projects.length} projects, ${articleCount} articles, owner "${portfolio.owner.name}"`,
 );

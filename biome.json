@@ -29,7 +29,7 @@
 	},
 	"overrides": [
 		{
-			"includes": ["src/app/layout.tsx"],
+			"includes": ["src/app/layout.tsx", "src/components/article-body.tsx"],
 			"linter": {
 				"rules": {
 					"security": {

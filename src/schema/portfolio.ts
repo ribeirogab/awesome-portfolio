@@ -30,6 +30,11 @@ const linkSchema = z.object({
 
 const logoSchema = z.union([z.string().startsWith("/"), z.url()]);
 
+const stackItemSchema = z.object({
+	name: z.string().min(1),
+	icon: stackIconSchema,
+});
+
 const entrySchema = z.object({
 	id: z.string().min(1),
 	title: z.string().min(1),
@@ -38,6 +43,16 @@ const entrySchema = z.object({
 	period: z.string().min(1).optional(),
 	tag: z.string().min(1).optional(),
 	description: z.string().min(1).optional(),
+	links: z.array(linkSchema).min(1).optional(),
+});
+
+const projectSchema = z.object({
+	id: z.string().min(1),
+	title: z.string().min(1),
+	year: z.string().regex(/^\d{4}$/),
+	tag: z.string().min(1),
+	description: z.string().min(1),
+	stack: z.array(stackItemSchema).min(1),
 	links: z.array(linkSchema).min(1).optional(),
 });
 
@@ -54,6 +69,22 @@ const entriesSectionSchema = z.object({
 	footnote: z.string().min(1).optional(),
 });
 
+const projectsSectionSchema = z.object({
+	...sectionBase,
+	type: z.literal("projects"),
+	title: z.string().min(1),
+	featured: z.array(z.string().min(1)).min(1),
+	viewAll: z.string().min(1),
+});
+
+const articlesSectionSchema = z.object({
+	...sectionBase,
+	type: z.literal("articles"),
+	title: z.string().min(1),
+	limit: z.number().int().min(1),
+	viewAll: z.string().min(1),
+});
+
 const stackSectionSchema = z.object({
 	...sectionBase,
 	type: z.literal("stack"),
@@ -62,14 +93,7 @@ const stackSectionSchema = z.object({
 		.array(
 			z.object({
 				title: z.string().min(1),
-				items: z
-					.array(
-						z.object({
-							name: z.string().min(1),
-							icon: stackIconSchema,
-						}),
-					)
-					.min(1),
+				items: z.array(stackItemSchema).min(1),
 			}),
 		)
 		.min(1),
@@ -100,16 +124,24 @@ const contactSectionSchema = z.object({
 
 const sectionSchema = z.discriminatedUnion("type", [
 	entriesSectionSchema,
+	projectsSectionSchema,
+	articlesSectionSchema,
 	stackSectionSchema,
 	githubContributionsSectionSchema,
 	statementSectionSchema,
 	contactSectionSchema,
 ]);
 
+const pageSchema = z.object({
+	title: z.string().min(1),
+	description: z.string().min(1),
+});
+
 export const portfolioSchema = z.object({
 	site: z.object({
 		title: z.string().min(1),
 		description: z.string().min(1),
+		url: z.url(),
 	}),
 	owner: z.object({
 		greeting: z.string().min(1),
@@ -119,10 +151,16 @@ export const portfolioSchema = z.object({
 		intro: z.string().min(1),
 	}),
 	socialLinks: z.array(linkSchema).min(1),
+	pages: z.object({
+		articles: pageSchema,
+		projects: pageSchema,
+	}),
+	projects: z.array(projectSchema).min(1),
 	sections: z.array(sectionSchema).min(1),
 });
 
 export type Portfolio = z.infer<typeof portfolioSchema>;
 export type Section = z.infer<typeof sectionSchema>;
+export type Project = z.infer<typeof projectSchema>;
 export type EntryLink = z.infer<typeof linkSchema>;
 export type StackIconName = z.infer<typeof stackIconSchema>;

@@ -1,9 +1,13 @@
 import { FiArrowUpRight } from "react-icons/fi";
+import { ArticleList } from "@/components/article-list";
 import { ContributionGraph } from "@/components/contribution-graph";
-import { Dock } from "@/components/dock";
 import { ExpandableEntry } from "@/components/expandable-entry";
+import { SectionHead } from "@/components/section-head";
 import { StackIcon } from "@/components/stack-icon";
+import { loadArticles } from "@/content/articles";
+import { findFeaturedProjects } from "@/content/projects";
 import { portfolio } from "@/data/portfolio";
+import type { Article } from "@/schema/article";
 import type { Section } from "@/schema/portfolio";
 
 function renderEmphasis(text: string) {
@@ -14,35 +18,13 @@ function renderEmphasis(text: string) {
 		);
 }
 
-function SectionHead({
-	sectionId,
-	title,
-	link,
+function PortfolioSection({
+	section,
+	articles,
 }: {
-	sectionId: string;
-	title: string;
-	link?: { label: string; url: string };
+	section: Section;
+	articles: Article[];
 }) {
-	return (
-		<div className="section-head">
-			<h2 className="label" id={`${sectionId}-label`}>
-				{title}
-			</h2>
-			{link ? (
-				<a
-					className="head-link"
-					href={link.url}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					{link.label} ↗
-				</a>
-			) : null}
-		</div>
-	);
-}
-
-function PortfolioSection({ section }: { section: Section }) {
 	switch (section.type) {
 		case "entries":
 			return (
@@ -68,6 +50,48 @@ function PortfolioSection({ section }: { section: Section }) {
 					{section.footnote ? (
 						<aside className="aside-note">{section.footnote}</aside>
 					) : null}
+				</section>
+			);
+		case "projects":
+			return (
+				<section
+					className="section-gap"
+					id={section.id}
+					aria-labelledby={`${section.id}-label`}
+				>
+					<SectionHead
+						sectionId={section.id}
+						title={section.title}
+						link={{ label: section.viewAll, url: "/projects" }}
+					/>
+					{findFeaturedProjects(portfolio, section.featured).map((project) => (
+						<ExpandableEntry
+							key={project.id}
+							descriptionId={project.id}
+							title={project.title}
+							tag={project.tag}
+							description={project.description}
+							links={project.links}
+						/>
+					))}
+				</section>
+			);
+		case "articles":
+			return (
+				<section
+					className="section-gap"
+					id={section.id}
+					aria-labelledby={`${section.id}-label`}
+				>
+					<SectionHead
+						sectionId={section.id}
+						title={section.title}
+						link={{ label: section.viewAll, url: "/articles" }}
+					/>
+					<ArticleList
+						articles={articles.slice(0, section.limit)}
+						layout="inline"
+					/>
 				</section>
 			);
 		case "stack":
@@ -134,7 +158,7 @@ function PortfolioSection({ section }: { section: Section }) {
 					aria-labelledby={`${section.id}-label`}
 				>
 					<div className="contact">
-						<div className="copy">
+						<div className="contact-copy">
 							<h2 id={`${section.id}-label`}>{section.heading}</h2>
 							<p>{section.invitation}</p>
 						</div>
@@ -158,35 +182,30 @@ function PortfolioSection({ section }: { section: Section }) {
 }
 
 export default function Home() {
-	const { owner, sections, socialLinks } = portfolio;
-	const navItems = sections
-		.filter((section) => section.navLabel)
-		.map((section, index) => ({
-			href: `#${section.id}`,
-			label: section.navLabel as string,
-			index: String(index + 1).padStart(2, "0"),
-		}));
+	const { owner, sections } = portfolio;
+	const articles = loadArticles();
 
 	return (
-		<>
-			<div className="page">
-				<header className="hero" id="top">
-					<p className="greeting">{owner.greeting}</p>
-					<h1>{owner.name}</h1>
-					<p className="definition">
-						{owner.role}{" "}
-						<span className="sep" aria-hidden="true">
-							•
-						</span>{" "}
-						{owner.availability}
-					</p>
-					<p className="intro">{owner.intro}</p>
-				</header>
-				{sections.map((section) => (
-					<PortfolioSection key={section.id} section={section} />
-				))}
-			</div>
-			<Dock navItems={navItems} socialLinks={socialLinks} />
-		</>
+		<div className="page">
+			<header className="hero" id="top">
+				<p className="greeting">{owner.greeting}</p>
+				<h1>{owner.name}</h1>
+				<p className="definition">
+					{owner.role}{" "}
+					<span className="sep" aria-hidden="true">
+						•
+					</span>{" "}
+					{owner.availability}
+				</p>
+				<p className="intro">{owner.intro}</p>
+			</header>
+			{sections.map((section) => (
+				<PortfolioSection
+					key={section.id}
+					section={section}
+					articles={articles}
+				/>
+			))}
+		</div>
 	);
 }
