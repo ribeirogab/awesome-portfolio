@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { EntryLinks } from "@/components/entry-links";
 import type { EntryLink } from "@/schema/portfolio";
 
 type ExpandableEntryProps = {
@@ -54,20 +55,11 @@ export function ExpandableEntry({
 					<div className="entry-desc" id={descriptionId}>
 						<p>{description}</p>
 						{links?.length ? (
-							<nav className="entry-links" aria-label={`${title} links`}>
-								{links.map((link) => (
-									<a
-										key={link.label}
-										href={link.url}
-										target="_blank"
-										rel="noopener noreferrer"
-										tabIndex={open ? undefined : -1}
-									>
-										{link.label}
-										<span aria-hidden="true">↗</span>
-									</a>
-								))}
-							</nav>
+							<EntryLinks
+								links={links}
+								label={`${title} links`}
+								focusable={open}
+							/>
 						) : null}
 					</div>
 					<button

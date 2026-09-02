@@ -13,12 +13,14 @@
 		"build": "next build",
 		"start": "next start",
 		"deploy": "pnpm check && pnpm build && wrangler deploy",
-		"check": "biome check . && node scripts/check-portfolio.ts",
+		"check": "biome check . && node scripts/check-content.ts",
 		"check:fix": "biome check --write .",
-		"check:portfolio": "node scripts/check-portfolio.ts",
+		"check:content": "node scripts/check-content.ts",
 		"knip": "knip"
 	},
 	"dependencies": {
+		"gray-matter": "4.0.3",
+		"marked": "^18.0.11",
 		"next": "^16.3.3",
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8",

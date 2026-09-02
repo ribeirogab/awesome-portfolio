@@ -15,12 +15,12 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm exec biome check .
 
-  portfolio:
+  content:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
-      - run: pnpm check:portfolio
+      - run: pnpm check:content
 
   knip:
     runs-on: ubuntu-latest

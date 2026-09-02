@@ -1,7 +1,8 @@
 {
 	"site": {
 		"title": "John Doe — Creative Developer",
-		"description": "Portfolio of John Doe, a creative developer building expressive interfaces where typography, motion, and engineering meet."
+		"description": "Portfolio of John Doe, a creative developer building expressive interfaces where typography, motion, and engineering meet.",
+		"url": "https://awesome-portfolio.57vjct26wg.workers.dev"
 	},
 	"owner": {
 		"greeting": "Hi, I'm",
@@ -16,6 +17,93 @@
 		{ "label": "X", "url": "https://example.com" },
 		{ "label": "LinkedIn", "url": "https://example.com" },
 		{ "label": "YouTube", "url": "https://example.com" }
+	],
+	"pages": {
+		"articles": {
+			"title": "Articles",
+			"description": "Everything I have written, newest first."
+		},
+		"projects": {
+			"title": "Projects",
+			"description": "Five pieces of work, told properly. The rest is on GitHub."
+		}
+	},
+	"projects": [
+		{
+			"id": "signal-board",
+			"title": "Signal Board",
+			"year": "2025",
+			"tag": "TypeScript",
+			"description": "A realtime status wall for small teams that treats uptime data as an editorial layout instead of a dashboard. Incidents render as a quiet typographic timeline, and the whole board stays readable on a wall display from across a room. Built with a tiny websocket core and no runtime dependencies beyond the framework.",
+			"stack": [
+				{ "name": "TypeScript", "icon": "typescript" },
+				{ "name": "React", "icon": "react" },
+				{ "name": "Node.js", "icon": "nodejs" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "Live demo", "url": "https://example.com" }
+			]
+		},
+		{
+			"id": "routewise",
+			"title": "Routewise",
+			"year": "2024",
+			"tag": "React",
+			"description": "A trip-planning notebook that mixes free-form notes with structured route segments. Drag a paragraph onto the map margin and it becomes a waypoint; drag it back and it is prose again. The interaction model went through nine prototypes before the drag felt honest, and the final version works fully offline.",
+			"stack": [
+				{ "name": "React", "icon": "react" },
+				{ "name": "TypeScript", "icon": "typescript" },
+				{ "name": "Motion design", "icon": "motion" }
+			],
+			"links": [{ "label": "GitHub", "url": "https://github.com/ribeirogab" }]
+		},
+		{
+			"id": "paper-trail",
+			"title": "Paper Trail",
+			"year": "2023",
+			"tag": "Node.js",
+			"description": "A command-line archiver that turns bookmark exports into a clean, searchable reading site. It strips trackers, normalizes typography, and generates a printable digest every Sunday. Started as a weekend script, now maintained as a small open tool with a patient issue queue and a handful of regular contributors.",
+			"stack": [
+				{ "name": "Node.js", "icon": "nodejs" },
+				{ "name": "TypeScript", "icon": "typescript" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "npm", "url": "https://example.com" }
+			]
+		},
+		{
+			"id": "ink-rhythm",
+			"title": "Ink Rhythm",
+			"year": "2024",
+			"tag": "TypeScript",
+			"description": "A browser extension that overlays the vertical rhythm of any page and highlights every element that drifts off the baseline. It exports a short report designers can attach to a review, and it has quietly become the studio's first pass on every handoff.",
+			"stack": [
+				{ "name": "TypeScript", "icon": "typescript" },
+				{ "name": "Vitest", "icon": "vitest" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "Chrome Web Store", "url": "https://example.com" }
+			]
+		},
+		{
+			"id": "marginalia",
+			"title": "Marginalia",
+			"year": "2023",
+			"tag": "React",
+			"description": "An annotation layer for long-form reading that keeps notes in the margin where they belong. Highlights, replies, and a printable digest, with nothing stored outside the reader's own browser.",
+			"stack": [
+				{ "name": "React", "icon": "react" },
+				{ "name": "Next.js", "icon": "nextjs" },
+				{ "name": "Cloudflare", "icon": "cloudflare" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "Live demo", "url": "https://example.com" }
+			]
+		}
 	],
 	"sections": [
 		{
@@ -82,41 +170,20 @@
 			]
 		},
 		{
-			"type": "entries",
+			"type": "projects",
 			"id": "projects",
-			"title": "Selected Projects",
+			"title": "Projects",
 			"navLabel": "Projects",
-			"entries": [
-				{
-					"id": "proj-1",
-					"title": "Signal Board",
-					"tag": "TypeScript",
-					"description": "A realtime status wall for small teams that treats uptime data as an editorial layout instead of a dashboard. Incidents render as a quiet typographic timeline, and the whole board stays readable on a wall display from across a room. Built with a tiny websocket core and no runtime dependencies beyond the framework.",
-					"links": [
-						{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
-						{ "label": "Live demo", "url": "https://example.com" }
-					]
-				},
-				{
-					"id": "proj-2",
-					"title": "Routewise",
-					"tag": "React",
-					"description": "A trip-planning notebook that mixes free-form notes with structured route segments. Drag a paragraph onto the map margin and it becomes a waypoint; drag it back and it is prose again. The interaction model went through nine prototypes before the drag felt honest, and the final version works fully offline.",
-					"links": [
-						{ "label": "GitHub", "url": "https://github.com/ribeirogab" }
-					]
-				},
-				{
-					"id": "proj-3",
-					"title": "Paper Trail",
-					"tag": "Node.js",
-					"description": "A command-line archiver that turns bookmark exports into a clean, searchable reading site. It strips trackers, normalizes typography, and generates a printable digest every Sunday. Started as a weekend script, now maintained as a small open tool with a patient issue queue and a handful of regular contributors.",
-					"links": [
-						{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
-						{ "label": "npm", "url": "https://example.com" }
-					]
-				}
-			]
+			"featured": ["signal-board", "routewise", "paper-trail"],
+			"viewAll": "All projects"
+		},
+		{
+			"type": "articles",
+			"id": "articles",
+			"title": "Articles",
+			"navLabel": "Articles",
+			"limit": 3,
+			"viewAll": "All articles"
 		},
 		{
 			"type": "stack",
