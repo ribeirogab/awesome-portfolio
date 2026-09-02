@@ -62,6 +62,20 @@ pnpm check:content
 
 It checks the full shape plus invariants: unique ids, featured projects that exist, local logos in `public/`, valid icons and URLs, and the frontmatter of every article. The production build runs the same validation.
 
+## SEO
+
+Everything below is generated from `portfolio.json` and the articles at build time. No configuration is needed.
+
+- Canonical URLs, Open Graph and Twitter Card tags on every page, with `article:*` tags on article pages.
+- Social preview images at `/opengraph-image`, `/articles/opengraph-image`, `/projects/opengraph-image` and `/articles/<slug>/opengraph-image`, rendered from the page content.
+- Favicon and Apple touch icon rendered from the first letter of the owner's name.
+- `sitemap.xml`, `robots.txt` and RSS autodiscovery for `/feed.xml`.
+- JSON-LD structured data: `WebSite`, `Person` and `ProfilePage` on the home page, `CollectionPage` and `BreadcrumbList` on the collection pages, `BlogPosting` and `BreadcrumbList` on each article.
+- A branded 404 page in [`src/app/not-found.tsx`](src/app/not-found.tsx), served with a real 404 status by Cloudflare.
+- Security and caching headers in [`public/_headers`](public/_headers) and a `/favicon.ico` redirect in [`public/_redirects`](public/_redirects). Cloudflare Workers applies both files to static assets. The `next dev` server ignores them.
+
+`site.url` in `portfolio.json` must be the production origin. It is the base of every canonical URL, sitemap entry and social image.
+
 ## Scripts
 
 | Command | What it does |

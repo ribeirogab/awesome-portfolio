@@ -17,7 +17,7 @@ export function ProjectCase({ index, project }: ProjectCaseProps) {
 				</span>
 				<span>{project.year}</span>
 			</div>
-			<h3 className="case-title">{project.title}</h3>
+			<h2 className="case-title">{project.title}</h2>
 			<p className="case-desc">{project.description}</p>
 			<ul className="stack-list">
 				{project.stack.map((item) => (

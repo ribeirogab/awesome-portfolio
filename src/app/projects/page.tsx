@@ -3,17 +3,22 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { PageHead } from "@/components/page-head";
 import { ProjectCase } from "@/components/project-case";
 import { portfolio } from "@/data/portfolio";
+import { JsonLd } from "@/seo/json-ld";
+import { pageMetadata } from "@/seo/metadata";
+import { projectsStructuredData } from "@/seo/structured-data";
 
 const { owner, pages, projects } = portfolio;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+	path: "/projects",
 	title: `${pages.projects.title} — ${owner.name}`,
 	description: pages.projects.description,
-};
+});
 
 export default function ProjectsPage() {
 	return (
 		<div className="page">
+			<JsonLd data={projectsStructuredData(projects)} />
 			<Breadcrumb
 				items={[
 					{ label: owner.name, href: "/" },

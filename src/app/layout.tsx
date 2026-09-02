@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import { Dock } from "@/components/dock";
 import { portfolio } from "@/data/portfolio";
+import { pageMetadata } from "@/seo/metadata";
 import "./globals.css";
 
 const manrope = localFont({
@@ -19,10 +20,37 @@ const cabinSketch = localFont({
 	variable: "--font-cabin-sketch",
 });
 
+const { site, owner } = portfolio;
+
 export const metadata: Metadata = {
-	metadataBase: new URL(portfolio.site.url),
-	title: portfolio.site.title,
-	description: portfolio.site.description,
+	metadataBase: new URL(site.url),
+	...pageMetadata({
+		path: "/",
+		title: site.title,
+		description: site.description,
+	}),
+	applicationName: site.title,
+	authors: [{ name: owner.name, url: site.url }],
+	creator: owner.name,
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			"max-image-preview": "large",
+			"max-snippet": -1,
+			"max-video-preview": -1,
+		},
+	},
+};
+
+export const viewport: Viewport = {
+	colorScheme: "light dark",
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#faf8f3" },
+		{ media: "(prefers-color-scheme: dark)", color: "#131210" },
+	],
 };
 
 const themeInitializer =
@@ -53,7 +81,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 						__html: themeInitializer,
 					}}
 				/>
-				{children}
+				<main>{children}</main>
 				<Dock navItems={navItems} socialLinks={portfolio.socialLinks} />
 			</body>
 		</html>

@@ -1,0 +1,33 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/icon
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
+/apple-icon
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
+/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
+/articles/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
+/projects/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
+/articles/:slug/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
