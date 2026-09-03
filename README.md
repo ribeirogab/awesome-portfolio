@@ -2,7 +2,7 @@
 
 A developer portfolio with a home page, an articles page, and a projects page. Structured content lives in [`portfolio.json`](portfolio.json) and articles live as Markdown files under [`content/articles/`](content/articles). To make it yours, edit those files. No code changes required.
 
-**Demo:** https://awesome-portfolio.57vjct26wg.workers.dev
+**Demo:** https://ap.ribas.sh
 
 ## Getting started
 

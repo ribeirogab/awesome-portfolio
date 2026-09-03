@@ -2,6 +2,12 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "awesome-portfolio",
 	"compatibility_date": "2026-08-30",
+	"routes": [
+		{
+			"pattern": "ap.ribas.sh",
+			"custom_domain": true
+		}
+	],
 	"assets": {
 		"directory": "./out",
 		"not_found_handling": "404-page"
