@@ -18,6 +18,7 @@
 	--fade-from: rgba(250, 248, 243, 0);
 	--fade-to: #faf8f3;
 	--focus: #211e19;
+	--photo-filter: none;
 	--duration-fast: 130ms;
 	--duration-hover: 150ms;
 	--duration-menu: 160ms;
@@ -50,6 +51,7 @@
 	--fade-from: rgba(19, 18, 16, 0);
 	--fade-to: #131210;
 	--focus: #ece8dd;
+	--photo-filter: brightness(0.92);
 	--heat-0: #24211b;
 	--heat-1: #413a28;
 	--heat-2: #6b5f3e;
@@ -155,6 +157,52 @@ button {
 	color: var(--muted);
 	align-self: stretch;
 	text-align: left;
+}
+
+.hero-mosaic {
+	align-self: stretch;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 124px;
+	gap: 10px;
+	margin-bottom: 28px;
+}
+
+.hero-mosaic .photo {
+	position: relative;
+	overflow: hidden;
+	border-radius: 10px;
+	border: 1px solid var(--line-strong);
+	background: var(--card);
+}
+
+.photo-img {
+	object-fit: cover;
+	filter: var(--photo-filter);
+}
+
+.hero-mosaic .photo:nth-child(5n + 1) {
+	grid-column: span 2;
+	grid-row: span 2;
+}
+
+.hero-mosaic .photo:nth-child(5n) {
+	grid-column: span 2;
+}
+
+.hero-mosaic .photo:nth-child(5n + 1):last-child {
+	grid-column: span 3;
+	grid-row: span 2;
+}
+
+.hero-mosaic .photo:nth-child(5n + 1):nth-last-child(2) {
+	grid-column: span 2;
+	grid-row: span 1;
+}
+
+.hero-mosaic .photo:nth-child(5n + 4):last-child {
+	grid-column: span 3;
+	grid-row: span 2;
 }
 
 .section-gap {
@@ -1066,6 +1114,11 @@ button {
 
 	.hero h1 {
 		font-size: 42px;
+	}
+
+	.hero-mosaic {
+		grid-auto-rows: 92px;
+		gap: 8px;
 	}
 
 	.stack-grid {

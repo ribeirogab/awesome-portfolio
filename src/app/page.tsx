@@ -3,6 +3,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import { ArticleList } from "@/components/article-list";
 import { ContributionGraph } from "@/components/contribution-graph";
 import { ExpandableEntry } from "@/components/expandable-entry";
+import { HeroMosaic } from "@/components/hero-mosaic";
 import { SectionHead } from "@/components/section-head";
 import { StackIcon } from "@/components/stack-icon";
 import { loadArticles } from "@/content/articles";
@@ -204,6 +205,7 @@ export default function Home() {
 					</span>{" "}
 					{owner.availability}
 				</p>
+				{owner.photos ? <HeroMosaic photos={owner.photos} /> : null}
 				<p className="intro">{owner.intro}</p>
 			</header>
 			{sections.map((section) => (
