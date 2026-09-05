@@ -14,7 +14,6 @@ export function wordCount(html: string): number {
 	return countWords(html.replace(/<[^>]+>/g, " "));
 }
 
-export function readingTime(source: string): string {
-	const minutes = Math.max(1, Math.round(countWords(source) / wordsPerMinute));
-	return `${minutes} min read`;
+export function readingMinutes(source: string): number {
+	return Math.max(1, Math.round(countWords(source) / wordsPerMinute));
 }

@@ -1,6 +1,6 @@
 # ADR-0001: Content collections outside the home page composition
 
-**Status:** Accepted
+**Status:** Accepted. File locations amended by [ADR-0002](0002-locales.md): content lives under `content/<locale>/`.
 **Date:** 2026-09-02
 
 ## Context

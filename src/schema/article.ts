@@ -19,6 +19,8 @@ type ArticleFrontmatter = z.infer<typeof articleFrontmatterSchema>;
 
 export type Article = ArticleFrontmatter & {
 	slug: string;
+	locale: string;
+	href: string;
 	html: string;
 	readingTime: string;
 };

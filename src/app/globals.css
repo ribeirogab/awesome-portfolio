@@ -735,6 +735,10 @@ button {
 	color: var(--ink);
 }
 
+.dock-menu a[aria-current] {
+	color: var(--ink);
+}
+
 .dock-menu a span.idx {
 	font-size: 10px;
 	color: var(--faint);

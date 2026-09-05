@@ -16,18 +16,5 @@
   Content-Type: image/png
   Cache-Control: public, max-age=86400
 
-/opengraph-image
-  Content-Type: image/png
-  Cache-Control: public, max-age=86400
-
-/articles/opengraph-image
-  Content-Type: image/png
-  Cache-Control: public, max-age=86400
-
-/projects/opengraph-image
-  Content-Type: image/png
-  Cache-Control: public, max-age=86400
-
-/articles/:slug/opengraph-image
-  Content-Type: image/png
+/social/*
   Cache-Control: public, max-age=86400

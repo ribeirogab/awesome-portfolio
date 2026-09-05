@@ -23,6 +23,13 @@ const stackIconNames = [
 
 const stackIconSchema = z.enum(stackIconNames);
 
+const languageTagSchema = z
+	.string()
+	.regex(
+		/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/,
+		"must be a BCP 47 language tag such as en-US or pt-BR",
+	);
+
 const linkSchema = z.object({
 	label: z.string().min(1),
 	url: z.url(),
@@ -147,6 +154,7 @@ export const portfolioSchema = z.object({
 		title: z.string().min(1),
 		description: z.string().min(1),
 		url: z.url(),
+		locale: languageTagSchema,
 	}),
 	owner: z.object({
 		greeting: z.string().min(1),

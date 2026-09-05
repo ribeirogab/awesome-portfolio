@@ -39,3 +39,11 @@ _Avoid_: Id, permalink, path
 **Photo**:
 An image chosen by the Portfolio Owner for the hero mosaic, stored under `public/photos/` or hosted at an absolute URL. Photos are listed in order in `portfolio.json`; the order sets which ones render large.
 _Avoid_: Picture, gallery item, thumbnail
+
+**Locale**:
+One language edition of the whole portfolio, identified by a short code such as `en` or `pt`. Each Locale owns a folder under `content/` with its own `portfolio.json`, `messages.json`, and Articles. The default Locale renders without a URL prefix; every other Locale renders under `/<code>`.
+_Avoid_: Language, translation, region
+
+**Message**:
+An interface string that belongs to the template rather than to the Portfolio Owner, such as "View more" or "min read". Messages live in `messages.json` inside each Locale folder and may contain `{name}` placeholders.
+_Avoid_: Label, copy, i18n key
