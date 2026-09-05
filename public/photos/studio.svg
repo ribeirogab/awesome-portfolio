@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <title>Studio window</title>
+  <rect width="1200" height="900" fill="#423a28"/>
+  <rect x="200" y="120" width="800" height="560" rx="16" fill="#ede8da"/>
+  <rect x="596" y="120" width="8" height="560" fill="#423a28"/>
+  <rect x="200" y="396" width="800" height="8" fill="#423a28"/>
+  <path d="M200 560L420 420L600 520L800 380L1000 500V680H200Z" fill="#b0a077"/>
+  <rect y="700" width="1200" height="200" fill="#7d6f4e"/>
+  <rect x="320" y="740" width="560" height="24" rx="12" fill="#d5c9ab"/>
+</svg>

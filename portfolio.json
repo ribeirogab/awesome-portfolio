@@ -9,7 +9,20 @@
 		"name": "John Doe",
 		"role": "creative developer",
 		"availability": "available for work",
-		"intro": "I build expressive interfaces where typography, motion, and engineering meet. Over the last nine years I have shipped design systems, editorial sites, and interactive tools for small studios and independent teams."
+		"intro": "I build expressive interfaces where typography, motion, and engineering meet. Over the last nine years I have shipped design systems, editorial sites, and interactive tools for small studios and independent teams.",
+		"photos": [
+			{
+				"src": "/photos/ridge.svg",
+				"alt": "Ridge at dawn, Serra da Mantiqueira"
+			},
+			{ "src": "/photos/harbor.svg", "alt": "Harbor line, Lisboa" },
+			{ "src": "/photos/studio.svg", "alt": "Studio window, São Paulo" },
+			{
+				"src": "/photos/dunes.svg",
+				"alt": "Dunes at noon, Lençóis Maranhenses"
+			},
+			{ "src": "/photos/forest.svg", "alt": "Forest path, Ilhabela" }
+		]
 	},
 	"socialLinks": [
 		{ "label": "GitHub", "url": "https://github.com/ribeirogab" },

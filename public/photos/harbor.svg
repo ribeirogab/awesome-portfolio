@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <title>Harbor line</title>
+  <rect width="1200" height="900" fill="#d5c9ab"/>
+  <rect y="520" width="1200" height="380" fill="#7d6f4e"/>
+  <rect y="520" width="1200" height="6" fill="#ede8da"/>
+  <rect x="120" y="380" width="60" height="140" fill="#423a28"/>
+  <rect x="220" y="440" width="140" height="80" fill="#423a28"/>
+  <rect x="420" y="410" width="90" height="110" fill="#423a28"/>
+  <rect x="560" y="460" width="200" height="60" fill="#423a28"/>
+  <rect x="820" y="400" width="50" height="120" fill="#423a28"/>
+  <rect x="920" y="450" width="160" height="70" fill="#423a28"/>
+  <path d="M0 640Q300 600 600 640T1200 640" stroke="#b0a077" stroke-width="4" fill="none"/>
+  <path d="M0 720Q300 680 600 720T1200 720" stroke="#b0a077" stroke-width="4" fill="none"/>
+</svg>

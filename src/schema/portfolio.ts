@@ -30,6 +30,11 @@ const linkSchema = z.object({
 
 const logoSchema = z.union([z.string().startsWith("/"), z.url()]);
 
+const photoSchema = z.object({
+	src: logoSchema,
+	alt: z.string().min(1),
+});
+
 const stackItemSchema = z.object({
 	name: z.string().min(1),
 	icon: stackIconSchema,
@@ -149,6 +154,7 @@ export const portfolioSchema = z.object({
 		role: z.string().min(1),
 		availability: z.string().min(1),
 		intro: z.string().min(1),
+		photos: z.array(photoSchema).min(1).optional(),
 	}),
 	socialLinks: z.array(linkSchema).min(1),
 	pages: z.object({
@@ -163,4 +169,5 @@ export type Portfolio = z.infer<typeof portfolioSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type Project = z.infer<typeof projectSchema>;
 export type EntryLink = z.infer<typeof linkSchema>;
+export type Photo = z.infer<typeof photoSchema>;
 export type StackIconName = z.infer<typeof stackIconSchema>;

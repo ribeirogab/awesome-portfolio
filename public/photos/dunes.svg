@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <title>Dunes at noon</title>
+  <rect width="1200" height="900" fill="#faf8f3"/>
+  <circle cx="300" cy="260" r="90" fill="#b0a077"/>
+  <path d="M0 560C300 420 500 700 800 560S1100 460 1200 500V900H0Z" fill="#d5c9ab"/>
+  <path d="M0 700C260 600 520 820 800 700S1080 640 1200 680V900H0Z" fill="#b0a077"/>
+  <path d="M0 820C300 760 600 880 1200 800V900H0Z" fill="#7d6f4e"/>
+</svg>

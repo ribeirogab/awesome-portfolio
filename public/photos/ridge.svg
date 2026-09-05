@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <title>Ridge at dawn</title>
+  <rect width="1200" height="900" fill="#ede8da"/>
+  <circle cx="900" cy="300" r="120" fill="#d5c9ab"/>
+  <path d="M0 620L220 420L380 540L560 360L760 560L920 460L1200 640V900H0Z" fill="#b0a077"/>
+  <path d="M0 720L180 600L340 680L520 560L700 700L900 620L1200 760V900H0Z" fill="#7d6f4e"/>
+  <path d="M0 820L240 740L480 800L720 720L960 800L1200 740V900H0Z" fill="#423a28"/>
+</svg>

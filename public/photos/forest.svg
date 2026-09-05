@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <title>Forest path</title>
+  <rect width="1200" height="900" fill="#d5c9ab"/>
+  <path d="M0 0H1200V900H0Z" fill="#b0a077" opacity="0.4"/>
+  <rect x="90" y="0" width="70" height="900" fill="#423a28"/>
+  <rect x="300" y="0" width="50" height="900" fill="#7d6f4e"/>
+  <rect x="520" y="0" width="90" height="900" fill="#423a28"/>
+  <rect x="780" y="0" width="60" height="900" fill="#7d6f4e"/>
+  <rect x="1010" y="0" width="80" height="900" fill="#423a28"/>
+  <path d="M0 900L480 620H720L1200 900Z" fill="#ede8da"/>
+</svg>

@@ -78,6 +78,19 @@ function checkLocalLogos(portfolio: Portfolio): string[] {
 	return problems;
 }
 
+function checkLocalPhotos(portfolio: Portfolio): string[] {
+	const problems: string[] = [];
+	for (const photo of portfolio.owner.photos ?? []) {
+		if (
+			photo.src.startsWith("/") &&
+			!existsSync(join(root, "public", photo.src))
+		) {
+			problems.push(`photo "${photo.src}" (owner.photos) not found in public/`);
+		}
+	}
+	return problems;
+}
+
 function checkFeaturedProjects(portfolio: Portfolio): string[] {
 	const problems: string[] = [];
 	for (const section of portfolio.sections) {
@@ -108,6 +121,7 @@ const portfolio = parsePortfolio();
 const problems = [
 	...checkUniqueIds(portfolio),
 	...checkLocalLogos(portfolio),
+	...checkLocalPhotos(portfolio),
 	...checkFeaturedProjects(portfolio),
 ];
 
@@ -119,6 +133,8 @@ if (problems.length > 0) {
 
 const articleCount = checkArticles();
 
+const photoCount = portfolio.owner.photos?.length ?? 0;
+
 console.log(
-	`✓ content is valid — ${portfolio.sections.length} sections, ${portfolio.projects.length} projects, ${articleCount} articles, owner "${portfolio.owner.name}"`,
+	`✓ content is valid — ${portfolio.sections.length} sections, ${portfolio.projects.length} projects, ${articleCount} articles, ${photoCount} photos, owner "${portfolio.owner.name}"`,
 );

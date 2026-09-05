@@ -35,3 +35,7 @@ _Avoid_: Post, blog entry, story
 **Slug**:
 The file name of an Article without its extension. It is the last part of the Article's URL.
 _Avoid_: Id, permalink, path
+
+**Photo**:
+An image chosen by the Portfolio Owner for the hero mosaic, stored under `public/photos/` or hosted at an absolute URL. Photos are listed in order in `portfolio.json`; the order sets which ones render large.
+_Avoid_: Picture, gallery item, thumbnail

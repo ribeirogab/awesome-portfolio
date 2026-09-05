@@ -19,6 +19,8 @@ Open http://localhost:3000.
 
 Site metadata (`site`), hero (`owner`), dock links (`socialLinks`), the headings of the articles and projects pages (`pages`), the projects collection (`projects`), and the ordered `sections` array of the home page. Reorder, remove, or duplicate sections freely. Sections with a `navLabel` appear in the dock menu.
 
+The optional `owner.photos` list renders a photo mosaic in the hero, between the role line and the intro. Each photo has a `src` (a file under `public/` or an absolute URL) and an `alt`. Add as many as you like: every five photos form one mosaic block, where the first photo is the large one and the fifth is the wide one, and the last block closes its row whatever the count. Ship photos already resized (about 1200px on the long side), because the static export does not optimize images. Remove the list to hide the mosaic.
+
 Section types:
 
 | Type | Renders |
@@ -60,7 +62,7 @@ After editing, validate:
 pnpm check:content
 ```
 
-It checks the full shape plus invariants: unique ids, featured projects that exist, local logos in `public/`, valid icons and URLs, and the frontmatter of every article. The production build runs the same validation.
+It checks the full shape plus invariants: unique ids, featured projects that exist, local logos and photos in `public/`, valid icons and URLs, and the frontmatter of every article. The production build runs the same validation.
 
 ## SEO
 
