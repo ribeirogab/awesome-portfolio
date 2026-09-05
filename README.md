@@ -4,6 +4,12 @@ A developer portfolio with a home page, an articles page, and a projects page. S
 
 **Demo:** https://ap.ribas.sh
 
+## Built with this template
+
+- [ribas.sh](https://ribas.sh) by [@ribeirogab](https://github.com/ribeirogab)
+
+Using it too? Open a PR and add yours to the list.
+
 ## Getting started
 
 ```bash
