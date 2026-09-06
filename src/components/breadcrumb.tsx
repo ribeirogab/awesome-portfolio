@@ -5,9 +5,14 @@ type Crumb = {
 	href?: string;
 };
 
-export function Breadcrumb({ items }: { items: Crumb[] }) {
+type BreadcrumbProps = {
+	items: Crumb[];
+	label: string;
+};
+
+export function Breadcrumb({ items, label }: BreadcrumbProps) {
 	return (
-		<nav className="breadcrumb" aria-label="Breadcrumb">
+		<nav className="breadcrumb" aria-label={label}>
 			<ol>
 				{items.map((item, index) => (
 					<li key={item.label}>

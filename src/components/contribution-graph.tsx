@@ -1,6 +1,7 @@
 "use client";
 
 import { type MouseEvent, useEffect, useState } from "react";
+import { type ContributionMessages, fill } from "@/schema/messages";
 
 type ContributionDay = {
 	date: string;
@@ -39,13 +40,15 @@ function toWeeks(days: ContributionDay[]): {
 
 function monthLabels(
 	weeks: ContributionDay[][],
+	languageTag: string,
 ): { label: string; week: number }[] {
 	const labels: { label: string; week: number }[] = [];
 	let previous = "";
 	weeks.forEach((week, index) => {
-		const month = new Date(`${week[0].date}T00:00:00`).toLocaleString("en-US", {
-			month: "short",
-		});
+		const month = new Date(`${week[0].date}T00:00:00`).toLocaleString(
+			languageTag,
+			{ month: "short" },
+		);
 		if (month !== previous) {
 			labels.push({ label: month, week: index });
 			previous = month;
@@ -63,28 +66,37 @@ type Tooltip = {
 	text: string;
 };
 
-function formatDay(date: string, count: number): string {
-	const label = new Date(`${date}T00:00:00`).toLocaleString("en-US", {
+function formatDay(
+	date: string,
+	count: number,
+	languageTag: string,
+	messages: ContributionMessages,
+): string {
+	const label = new Date(`${date}T00:00:00`).toLocaleString(languageTag, {
 		month: "short",
 		day: "numeric",
 	});
 	if (count === 0) {
-		return `No contributions on ${label}`;
+		return fill(messages.none, { date: label });
 	}
 	if (count === 1) {
-		return `1 contribution on ${label}`;
+		return fill(messages.one, { date: label });
 	}
-	return `${count} contributions on ${label}`;
+	return fill(messages.many, { count, date: label });
 }
 
 type ContributionGraphProps = {
 	username: string;
 	errorNotice: string;
+	languageTag: string;
+	messages: ContributionMessages;
 };
 
 export function ContributionGraph({
 	username,
 	errorNotice,
+	languageTag,
+	messages,
 }: ContributionGraphProps) {
 	const [state, setState] = useState<GraphState>({ status: "loading" });
 	const [tooltip, setTooltip] = useState<Tooltip | null>(null);
@@ -102,7 +114,7 @@ export function ContributionGraph({
 		setTooltip({
 			x: cell.left - block.left + cell.width / 2,
 			y: cell.top - block.top,
-			text: formatDay(date, Number(count)),
+			text: formatDay(date, Number(count), languageTag, messages),
 		});
 	};
 
@@ -142,7 +154,7 @@ export function ContributionGraph({
 	if (state.status !== "ready") {
 		return (
 			<div className="wip-block">
-				<p>{state.status === "loading" ? "Loading activity…" : errorNotice}</p>
+				<p>{state.status === "loading" ? messages.loading : errorNotice}</p>
 			</div>
 		);
 	}
@@ -164,7 +176,7 @@ export function ContributionGraph({
 			<div className="contrib-scroll">
 				<div className="contrib-inner">
 					<div className="contrib-months" aria-hidden="true">
-						{monthLabels(state.weeks).map((month) => (
+						{monthLabels(state.weeks, languageTag).map((month) => (
 							<span
 								className="contrib-month"
 								key={`${month.label}-${month.week}`}
@@ -177,7 +189,7 @@ export function ContributionGraph({
 					<div
 						className="contrib-grid"
 						role="img"
-						aria-label={`${state.total} GitHub contributions in the last year`}
+						aria-label={fill(messages.graphLabel, { count: state.total })}
 					>
 						{state.weeks.map((week, weekIndex) => (
 							<div
@@ -203,15 +215,16 @@ export function ContributionGraph({
 					</div>
 					<div className="contrib-foot">
 						<p className="contrib-total">
-							{state.total.toLocaleString("en-US")} contributions in the last
-							year
+							{fill(messages.total, {
+								count: state.total.toLocaleString(languageTag),
+							})}
 						</p>
 						<div className="contrib-legend" aria-hidden="true">
-							<span>Less</span>
+							<span>{messages.less}</span>
 							{[0, 1, 2, 3, 4].map((level) => (
 								<span className="contrib-day" data-level={level} key={level} />
 							))}
-							<span>More</span>
+							<span>{messages.more}</span>
 						</div>
 					</div>
 				</div>

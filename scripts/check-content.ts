@@ -1,38 +1,31 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { z } from "zod";
 import { articlesDirectory, loadArticles } from "../src/content/articles.ts";
+import {
+	allLocales,
+	defaultLocale,
+	loadLocaleConfig,
+	localesFile,
+} from "../src/content/locales.ts";
+import { loadMessages, messagesFile } from "../src/content/messages.ts";
+import { loadPortfolio, portfolioFile } from "../src/content/portfolio.ts";
 import { missingProjectIds } from "../src/content/projects.ts";
-import { type Portfolio, portfolioSchema } from "../src/schema/portfolio.ts";
+import type { Article } from "../src/schema/article.ts";
+import type { Portfolio } from "../src/schema/portfolio.ts";
 
 const root = join(import.meta.dirname, "..");
-const portfolioPath = join(root, "portfolio.json");
 
 function fail(message: string): never {
 	console.error(`✗ ${message}`);
 	process.exit(1);
 }
 
-function parsePortfolio(): Portfolio {
-	let raw: string;
+function attempt<T>(load: () => T): T {
 	try {
-		raw = readFileSync(portfolioPath, "utf8");
-	} catch {
-		fail("portfolio.json: file not found at the repository root");
-	}
-
-	let data: unknown;
-	try {
-		data = JSON.parse(raw);
+		return load();
 	} catch (error) {
-		fail(`portfolio.json: invalid JSON — ${(error as Error).message}`);
+		fail((error as Error).message);
 	}
-
-	const result = portfolioSchema.safeParse(data);
-	if (!result.success) {
-		fail(`portfolio.json: schema errors\n${z.prettifyError(result.error)}`);
-	}
-	return result.data;
 }
 
 function checkUniqueIds(portfolio: Portfolio): string[] {
@@ -106,35 +99,129 @@ function checkFeaturedProjects(portfolio: Portfolio): string[] {
 	return problems;
 }
 
-function checkArticles(): number {
-	if (!existsSync(join(root, articlesDirectory))) {
-		fail(`${articlesDirectory}: directory not found`);
-	}
-	try {
-		return loadArticles(root).length;
-	} catch (error) {
-		fail(`${articlesDirectory}/${(error as Error).message}`);
-	}
-}
-
-const portfolio = parsePortfolio();
-const problems = [
-	...checkUniqueIds(portfolio),
-	...checkLocalLogos(portfolio),
-	...checkLocalPhotos(portfolio),
-	...checkFeaturedProjects(portfolio),
-];
-
-if (problems.length > 0) {
-	fail(
-		`portfolio.json: invariant errors\n${problems.map((problem) => `  - ${problem}`).join("\n")}`,
+function sameList(actual: string[], expected: string[]): boolean {
+	return (
+		actual.length === expected.length &&
+		actual.every((value, index) => value === expected[index])
 	);
 }
 
-const articleCount = checkArticles();
+function checkParity(portfolio: Portfolio, reference: Portfolio): string[] {
+	const problems: string[] = [];
+	if (portfolio.site.url !== reference.site.url) {
+		problems.push(`site.url must be "${reference.site.url}"`);
+	}
+	const projectIds = (source: Portfolio) =>
+		source.projects.map((project) => project.id);
+	if (!sameList(projectIds(portfolio), projectIds(reference))) {
+		problems.push(
+			`projects must have the ids [${projectIds(reference).join(", ")}] in that order`,
+		);
+	}
+	const sectionKeys = (source: Portfolio) =>
+		source.sections.map((section) => `${section.type}:${section.id}`);
+	if (!sameList(sectionKeys(portfolio), sectionKeys(reference))) {
+		problems.push(
+			`sections must be [${sectionKeys(reference).join(", ")}] in that order`,
+		);
+		return problems;
+	}
+	portfolio.sections.forEach((section, index) => {
+		const expected = reference.sections[index];
+		if (section.type === "entries" && expected.type === "entries") {
+			const ids = section.entries.map((entry) => entry.id);
+			const expectedIds = expected.entries.map((entry) => entry.id);
+			if (!sameList(ids, expectedIds)) {
+				problems.push(
+					`section "${section.id}" must have the entries [${expectedIds.join(", ")}] in that order`,
+				);
+			}
+		}
+		if (section.type === "projects" && expected.type === "projects") {
+			if (!sameList(section.featured, expected.featured)) {
+				problems.push(
+					`section "${section.id}" must feature [${expected.featured.join(", ")}] in that order`,
+				);
+			}
+		}
+		if (
+			section.type === "github-contributions" &&
+			expected.type === "github-contributions" &&
+			section.username !== expected.username
+		) {
+			problems.push(
+				`section "${section.id}" must use the username "${expected.username}"`,
+			);
+		}
+	});
+	const socialUrls = (source: Portfolio) =>
+		source.socialLinks.map((link) => link.url);
+	if (!sameList(socialUrls(portfolio), socialUrls(reference))) {
+		problems.push("socialLinks must have the same urls in the same order");
+	}
+	const photoSources = (source: Portfolio) =>
+		(source.owner.photos ?? []).map((photo) => photo.src);
+	if (!sameList(photoSources(portfolio), photoSources(reference))) {
+		problems.push("owner.photos must have the same src list in the same order");
+	}
+	return problems;
+}
 
-const photoCount = portfolio.owner.photos?.length ?? 0;
+function reportProblems(file: string, problems: string[]) {
+	if (problems.length > 0) {
+		fail(
+			`${file}: invariant errors\n${problems.map((problem) => `  - ${problem}`).join("\n")}`,
+		);
+	}
+}
+
+function checkArticles(locale: string): Article[] {
+	const directory = articlesDirectory(locale);
+	if (!existsSync(join(root, directory))) {
+		fail(`${directory}: directory not found`);
+	}
+	try {
+		return loadArticles(locale, root);
+	} catch (error) {
+		fail(`${directory}/${(error as Error).message}`);
+	}
+}
+
+function checkLocaleFolders() {
+	for (const locale of allLocales(root)) {
+		for (const file of [portfolioFile(locale), messagesFile(locale)]) {
+			if (!existsSync(join(root, file))) {
+				fail(`${localesFile}: locale "${locale}" has no ${file}`);
+			}
+		}
+	}
+}
+
+attempt(() => loadLocaleConfig(root));
+checkLocaleFolders();
+
+const reference = attempt(() => loadPortfolio(defaultLocale(root), root));
+const summaries: string[] = [];
+
+for (const locale of allLocales(root)) {
+	const portfolio = attempt(() => loadPortfolio(locale, root));
+	attempt(() => loadMessages(locale, root));
+	reportProblems(portfolioFile(locale), [
+		...checkUniqueIds(portfolio),
+		...checkLocalLogos(portfolio),
+		...checkLocalPhotos(portfolio),
+		...checkFeaturedProjects(portfolio),
+		...(locale === defaultLocale(root)
+			? []
+			: checkParity(portfolio, reference)),
+	]);
+	const articles = checkArticles(locale);
+	const photoCount = portfolio.owner.photos?.length ?? 0;
+	summaries.push(
+		`${locale}: ${portfolio.sections.length} sections, ${portfolio.projects.length} projects, ${articles.length} articles, ${photoCount} photos`,
+	);
+}
 
 console.log(
-	`✓ content is valid — ${portfolio.sections.length} sections, ${portfolio.projects.length} projects, ${articleCount} articles, ${photoCount} photos, owner "${portfolio.owner.name}"`,
+	`✓ content is valid — owner "${reference.owner.name}", default locale "${defaultLocale(root)}"\n${summaries.map((summary) => `  - ${summary}`).join("\n")}`,
 );

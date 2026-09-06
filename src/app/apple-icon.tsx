@@ -1,12 +1,15 @@
 import { ImageResponse } from "next/og";
-import { portfolio } from "@/data/portfolio";
+import { loadDefaultLocaleContent } from "@/content/locale-content";
 
 export const dynamic = "force-static";
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
 export default function AppleIcon() {
-	const initial = portfolio.owner.name.trim().charAt(0).toUpperCase();
+	const initial = loadDefaultLocaleContent()
+		.portfolio.owner.name.trim()
+		.charAt(0)
+		.toUpperCase();
 	return new ImageResponse(
 		<div
 			style={{

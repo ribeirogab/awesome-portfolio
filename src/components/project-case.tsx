@@ -5,9 +5,10 @@ import type { Project } from "@/schema/portfolio";
 type ProjectCaseProps = {
 	index: string;
 	project: Project;
+	linksLabel: string;
 };
 
-export function ProjectCase({ index, project }: ProjectCaseProps) {
+export function ProjectCase({ index, project, linksLabel }: ProjectCaseProps) {
 	return (
 		<article className="case">
 			<div className="meta-row">
@@ -28,7 +29,7 @@ export function ProjectCase({ index, project }: ProjectCaseProps) {
 				))}
 			</ul>
 			{project.links?.length ? (
-				<EntryLinks links={project.links} label={`${project.title} links`} />
+				<EntryLinks links={project.links} label={linksLabel} />
 			) : null}
 		</article>
 	);

@@ -2,16 +2,16 @@ function parseIsoDate(isoDate: string): Date {
 	return new Date(`${isoDate}T00:00:00Z`);
 }
 
-export function formatDay(isoDate: string): string {
-	return parseIsoDate(isoDate).toLocaleDateString("en-US", {
+export function formatDay(isoDate: string, languageTag: string): string {
+	return parseIsoDate(isoDate).toLocaleDateString(languageTag, {
 		month: "short",
 		day: "numeric",
 		timeZone: "UTC",
 	});
 }
 
-export function formatShortDate(isoDate: string): string {
-	return parseIsoDate(isoDate).toLocaleDateString("en-US", {
+export function formatShortDate(isoDate: string, languageTag: string): string {
+	return parseIsoDate(isoDate).toLocaleDateString(languageTag, {
 		month: "short",
 		day: "numeric",
 		year: "numeric",
@@ -19,8 +19,8 @@ export function formatShortDate(isoDate: string): string {
 	});
 }
 
-export function formatLongDate(isoDate: string): string {
-	return parseIsoDate(isoDate).toLocaleDateString("en-US", {
+export function formatLongDate(isoDate: string, languageTag: string): string {
+	return parseIsoDate(isoDate).toLocaleDateString(languageTag, {
 		month: "long",
 		day: "numeric",
 		year: "numeric",

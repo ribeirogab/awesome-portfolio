@@ -6,6 +6,7 @@ type ArticleListLayout = "rail" | "inline";
 
 type ArticleListProps = {
 	articles: Article[];
+	languageTag: string;
 	layout?: ArticleListLayout;
 };
 
@@ -20,7 +21,7 @@ function ArticleTitle({
 }) {
 	return (
 		<Heading className="entry-title">
-			<Link href={`/articles/${article.slug}`}>{article.title}</Link>
+			<Link href={article.href}>{article.title}</Link>
 		</Heading>
 	);
 }
@@ -36,9 +37,11 @@ function ArticleTags({ article }: { article: Article }) {
 
 function RailRow({
 	article,
+	languageTag,
 	showYear,
 }: {
 	article: Article;
+	languageTag: string;
 	showYear: boolean;
 }) {
 	return (
@@ -48,7 +51,9 @@ function RailRow({
 					<span className="article-year">{yearOf(article.date)}</span>
 				) : null}
 				<span className="entry-meta">
-					<time dateTime={article.date}>{formatDay(article.date)}</time>
+					<time dateTime={article.date}>
+						{formatDay(article.date, languageTag)}
+					</time>
 				</span>
 			</div>
 			<div className="article-main">
@@ -60,13 +65,21 @@ function RailRow({
 	);
 }
 
-function InlineRow({ article }: { article: Article }) {
+function InlineRow({
+	article,
+	languageTag,
+}: {
+	article: Article;
+	languageTag: string;
+}) {
 	return (
 		<article className="article-row article-row-inline">
 			<div className="article-line">
 				<ArticleTitle article={article} heading="h3" />
 				<span className="entry-meta">
-					<time dateTime={article.date}>{formatShortDate(article.date)}</time>
+					<time dateTime={article.date}>
+						{formatShortDate(article.date, languageTag)}
+					</time>
 				</span>
 			</div>
 			<p className="article-excerpt">{article.excerpt}</p>
@@ -75,18 +88,33 @@ function InlineRow({ article }: { article: Article }) {
 	);
 }
 
-export function ArticleList({ articles, layout = "rail" }: ArticleListProps) {
+export function ArticleList({
+	articles,
+	languageTag,
+	layout = "rail",
+}: ArticleListProps) {
 	return (
 		<>
 			{articles.map((article, index) => {
 				if (layout === "inline") {
-					return <InlineRow key={article.slug} article={article} />;
+					return (
+						<InlineRow
+							key={article.slug}
+							article={article}
+							languageTag={languageTag}
+						/>
+					);
 				}
 				const previous = articles[index - 1];
 				const showYear =
 					!previous || yearOf(previous.date) !== yearOf(article.date);
 				return (
-					<RailRow key={article.slug} article={article} showYear={showYear} />
+					<RailRow
+						key={article.slug}
+						article={article}
+						languageTag={languageTag}
+						showYear={showYear}
+					/>
 				);
 			})}
 		</>

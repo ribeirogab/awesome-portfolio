@@ -1,8 +1,7 @@
 import { ImageResponse } from "next/og";
-import { portfolio } from "@/data/portfolio";
+import type { Portfolio } from "@/schema/portfolio";
 
 export const ogSize = { width: 1200, height: 630 };
-export const ogContentType = "image/png";
 
 const paper = "#faf8f3";
 const ink = "#211e19";
@@ -17,7 +16,10 @@ type OgCardInput = {
 	footer?: string;
 };
 
-export function ogImage({ label, title, description, footer }: OgCardInput) {
+export function ogImage(
+	portfolio: Portfolio,
+	{ label, title, description, footer }: OgCardInput,
+) {
 	const { owner, site } = portfolio;
 	const host = new URL(site.url).host;
 	const long = title.length > 48;

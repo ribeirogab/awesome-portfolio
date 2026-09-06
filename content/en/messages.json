@@ -1,0 +1,42 @@
+{
+	"languageName": "English",
+	"viewMore": "View more",
+	"viewLess": "View less",
+	"readingTime": "{minutes} min read",
+	"previous": "Previous",
+	"next": "Next",
+	"adjacentArticles": "Adjacent articles",
+	"rss": "RSS",
+	"breadcrumb": "Breadcrumb",
+	"personalStatement": "Personal statement",
+	"entryLinks": "{title} links",
+	"notFound": {
+		"title": "Page not found",
+		"description": "The page you asked for does not exist or has moved.",
+		"backHome": "Back home"
+	},
+	"dock": {
+		"quickActions": "Quick actions",
+		"backToTop": "Back to top",
+		"openSections": "Open section menu",
+		"closeSections": "Close section menu",
+		"sections": "Sections",
+		"openSocial": "Open social links menu",
+		"closeSocial": "Close social links menu",
+		"socialLinks": "Social links",
+		"toggleTheme": "Toggle theme",
+		"openLanguages": "Open language menu",
+		"closeLanguages": "Close language menu",
+		"languages": "Languages"
+	},
+	"contributions": {
+		"loading": "Loading activity…",
+		"total": "{count} contributions in the last year",
+		"graphLabel": "{count} GitHub contributions in the last year",
+		"none": "No contributions on {date}",
+		"one": "1 contribution on {date}",
+		"many": "{count} contributions on {date}",
+		"less": "Less",
+		"more": "More"
+	}
+}

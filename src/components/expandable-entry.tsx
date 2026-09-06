@@ -14,6 +14,9 @@ type ExpandableEntryProps = {
 	tag?: string;
 	description?: string;
 	links?: EntryLink[];
+	linksLabel: string;
+	viewMore: string;
+	viewLess: string;
 };
 
 export function ExpandableEntry({
@@ -25,6 +28,9 @@ export function ExpandableEntry({
 	tag,
 	description,
 	links,
+	linksLabel,
+	viewMore,
+	viewLess,
 }: ExpandableEntryProps) {
 	const [open, setOpen] = useState(false);
 
@@ -55,11 +61,7 @@ export function ExpandableEntry({
 					<div className="entry-desc" id={descriptionId}>
 						<p>{description}</p>
 						{links?.length ? (
-							<EntryLinks
-								links={links}
-								label={`${title} links`}
-								focusable={open}
-							/>
+							<EntryLinks links={links} label={linksLabel} focusable={open} />
 						) : null}
 					</div>
 					<button
@@ -69,7 +71,7 @@ export function ExpandableEntry({
 						aria-controls={descriptionId}
 						onClick={() => setOpen((value) => !value)}
 					>
-						{open ? "View less" : "View more"}{" "}
+						{open ? viewLess : viewMore}{" "}
 						<span className="chev" aria-hidden="true">
 							▾
 						</span>

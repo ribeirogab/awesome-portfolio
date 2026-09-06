@@ -1,26 +1,37 @@
-import { portfolio } from "@/data/portfolio";
+import type { LocaleContent } from "@/content/locale-content";
+import { localizePath } from "@/content/locales";
 import type { Article } from "@/schema/article";
 import type { Project } from "@/schema/portfolio";
 import type { JsonLdData } from "@/seo/json-ld";
 
-const { site, owner, socialLinks, pages } = portfolio;
-
 const context = "https://schema.org";
-const personId = `${site.url}/#person`;
-const websiteId = `${site.url}/#website`;
 
-function absolute(path: string): string {
-	return `${site.url}${path}`;
+type Crumb = {
+	name: string;
+	path: string;
+};
+
+function ids(content: LocaleContent) {
+	const { site } = content.portfolio;
+	return {
+		person: `${site.url}/#person`,
+		website: `${site.url}/#website`,
+	};
 }
 
-function personRef(): JsonLdData {
-	return { "@id": personId };
+function absolute(content: LocaleContent, path: string): string {
+	return `${content.portfolio.site.url}${localizePath(content.locale, path)}`;
 }
 
-function person(): JsonLdData {
+function personRef(content: LocaleContent): JsonLdData {
+	return { "@id": ids(content).person };
+}
+
+function person(content: LocaleContent): JsonLdData {
+	const { site, owner, socialLinks } = content.portfolio;
 	return {
 		"@type": "Person",
-		"@id": personId,
+		"@id": ids(content).person,
 		name: owner.name,
 		jobTitle: owner.role,
 		description: owner.intro,
@@ -29,79 +40,82 @@ function person(): JsonLdData {
 	};
 }
 
-function website(): JsonLdData {
+function website(content: LocaleContent): JsonLdData {
+	const { site } = content.portfolio;
 	return {
 		"@type": "WebSite",
-		"@id": websiteId,
+		"@id": ids(content).website,
 		url: site.url,
 		name: site.title,
 		description: site.description,
-		inLanguage: "en",
-		author: personRef(),
-		publisher: personRef(),
+		inLanguage: site.locale,
+		author: personRef(content),
+		publisher: personRef(content),
 	};
 }
 
-type Crumb = {
-	name: string;
-	path: string;
-};
-
-function breadcrumbList(crumbs: Crumb[]): JsonLdData {
+function breadcrumbList(content: LocaleContent, crumbs: Crumb[]): JsonLdData {
 	return {
 		"@type": "BreadcrumbList",
 		itemListElement: crumbs.map((crumb, index) => ({
 			"@type": "ListItem",
 			position: index + 1,
 			name: crumb.name,
-			item: absolute(crumb.path),
+			item: absolute(content, crumb.path),
 		})),
 	};
 }
 
-export function homeStructuredData(): JsonLdData {
+export function homeStructuredData(content: LocaleContent): JsonLdData {
+	const { site } = content.portfolio;
 	return {
 		"@context": context,
 		"@graph": [
-			website(),
-			person(),
+			website(content),
+			person(content),
 			{
 				"@type": "ProfilePage",
-				"@id": `${site.url}/#profile`,
-				url: site.url,
+				"@id": `${absolute(content, "/")}#profile`,
+				url: absolute(content, "/"),
 				name: site.title,
 				description: site.description,
-				isPartOf: { "@id": websiteId },
-				mainEntity: personRef(),
+				inLanguage: site.locale,
+				isPartOf: { "@id": ids(content).website },
+				mainEntity: personRef(content),
 			},
 		],
 	};
 }
 
-export function articlesStructuredData(articles: Article[]): JsonLdData {
+export function articlesStructuredData(
+	content: LocaleContent,
+	articles: Article[],
+): JsonLdData {
+	const { owner, pages, site } = content.portfolio;
 	const path = "/articles";
 	return {
 		"@context": context,
 		"@graph": [
 			{
 				"@type": "CollectionPage",
-				"@id": `${absolute(path)}/#page`,
-				url: absolute(path),
+				"@id": `${absolute(content, path)}/#page`,
+				url: absolute(content, path),
 				name: pages.articles.title,
 				description: pages.articles.description,
-				isPartOf: { "@id": websiteId },
-				author: personRef(),
+				inLanguage: site.locale,
+				isPartOf: { "@id": ids(content).website },
+				author: personRef(content),
 				mainEntity: {
 					"@type": "ItemList",
 					itemListElement: articles.map((article, index) => ({
 						"@type": "ListItem",
 						position: index + 1,
-						url: absolute(`/articles/${article.slug}`),
+						url: `${site.url}${article.href}`,
 						name: article.title,
 					})),
 				},
 			},
-			breadcrumbList([
+			breadcrumbList(content, [
 				{ name: owner.name, path: "/" },
 				{ name: pages.articles.title, path },
 			]),
@@ -109,19 +123,24 @@ export function articlesStructuredData(articles: Article[]): JsonLdData {
 	};
 }
 
-export function projectsStructuredData(projects: Project[]): JsonLdData {
+export function projectsStructuredData(
+	content: LocaleContent,
+	projects: Project[],
+): JsonLdData {
+	const { owner, pages, site } = content.portfolio;
 	const path = "/projects";
 	return {
 		"@context": context,
 		"@graph": [
 			{
 				"@type": "CollectionPage",
-				"@id": `${absolute(path)}/#page`,
-				url: absolute(path),
+				"@id": `${absolute(content, path)}/#page`,
+				url: absolute(content, path),
 				name: pages.projects.title,
 				description: pages.projects.description,
-				isPartOf: { "@id": websiteId },
-				author: personRef(),
+				inLanguage: site.locale,
+				isPartOf: { "@id": ids(content).website },
+				author: personRef(content),
 				mainEntity: {
 					"@type": "ItemList",
 					itemListElement: projects.map((project, index) => ({
@@ -133,13 +152,13 @@ export function projectsStructuredData(projects: Project[]): JsonLdData {
 							description: project.description,
 							dateCreated: project.year,
 							keywords: project.stack.map((item) => item.name).join(", "),
-							author: personRef(),
+							author: personRef(content),
 							...(project.links?.[0] ? { url: project.links[0].url } : {}),
 						},
 					})),
 				},
 			},
-			breadcrumbList([
+			breadcrumbList(content, [
 				{ name: owner.name, path: "/" },
 				{ name: pages.projects.title, path },
 			]),
@@ -148,31 +167,33 @@ export function projectsStructuredData(projects: Project[]): JsonLdData {
 }
 
 export function articleStructuredData(
+	content: LocaleContent,
 	article: Article,
 	wordCount: number,
 ): JsonLdData {
+	const { owner, pages, site } = content.portfolio;
 	const path = `/articles/${article.slug}`;
 	return {
 		"@context": context,
 		"@graph": [
 			{
 				"@type": "BlogPosting",
-				"@id": `${absolute(path)}/#article`,
+				"@id": `${absolute(content, path)}/#article`,
 				headline: article.title,
 				description: article.excerpt,
-				url: absolute(path),
-				mainEntityOfPage: absolute(path),
+				url: absolute(content, path),
+				mainEntityOfPage: absolute(content, path),
 				datePublished: article.date,
 				dateModified: article.date,
-				inLanguage: "en",
+				inLanguage: site.locale,
 				articleSection: article.tag,
 				keywords: article.tag,
 				wordCount,
-				author: personRef(),
-				publisher: personRef(),
-				isPartOf: { "@id": websiteId },
+				author: personRef(content),
+				publisher: personRef(content),
+				isPartOf: { "@id": ids(content).website },
 			},
-			breadcrumbList([
+			breadcrumbList(content, [
 				{ name: owner.name, path: "/" },
 				{ name: pages.articles.title, path: "/articles" },
 				{ name: article.title, path },

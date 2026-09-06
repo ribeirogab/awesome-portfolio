@@ -30,7 +30,7 @@
 	"overrides": [
 		{
 			"includes": [
-				"src/app/layout.tsx",
+				"src/app/document.tsx",
 				"src/components/article-body.tsx",
 				"src/seo/json-ld.tsx"
 			],

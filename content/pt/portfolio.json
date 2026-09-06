@@ -1,0 +1,280 @@
+{
+	"site": {
+		"title": "John Doe — Desenvolvedor Criativo",
+		"description": "Portfólio de John Doe, desenvolvedor criativo que constrói interfaces expressivas onde tipografia, movimento e engenharia se encontram.",
+		"url": "https://ap.ribeiro.engineer",
+		"locale": "pt-BR"
+	},
+	"owner": {
+		"greeting": "Olá, eu sou",
+		"name": "John Doe",
+		"role": "desenvolvedor criativo",
+		"availability": "disponível para trabalho",
+		"intro": "Construo interfaces expressivas onde tipografia, movimento e engenharia se encontram. Nos últimos nove anos entreguei design systems, sites editoriais e ferramentas interativas para estúdios pequenos e times independentes.",
+		"photos": [
+			{
+				"src": "/photos/ridge.svg",
+				"alt": "Serra ao amanhecer, Serra da Mantiqueira"
+			},
+			{ "src": "/photos/harbor.svg", "alt": "Linha do porto, Lisboa" },
+			{ "src": "/photos/studio.svg", "alt": "Janela do estúdio, São Paulo" },
+			{
+				"src": "/photos/dunes.svg",
+				"alt": "Dunas ao meio-dia, Lençóis Maranhenses"
+			},
+			{ "src": "/photos/forest.svg", "alt": "Trilha na mata, Ilhabela" }
+		]
+	},
+	"socialLinks": [
+		{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+		{ "label": "Instagram", "url": "https://example.com" },
+		{ "label": "X", "url": "https://example.com" },
+		{ "label": "LinkedIn", "url": "https://example.com" },
+		{ "label": "YouTube", "url": "https://example.com" }
+	],
+	"pages": {
+		"articles": {
+			"title": "Artigos",
+			"description": "Tudo o que escrevi, do mais recente ao mais antigo."
+		},
+		"projects": {
+			"title": "Projetos",
+			"description": "Cinco trabalhos contados com calma. O resto está no GitHub."
+		}
+	},
+	"projects": [
+		{
+			"id": "signal-board",
+			"title": "Signal Board",
+			"year": "2025",
+			"tag": "TypeScript",
+			"description": "Um painel de status em tempo real para times pequenos que trata dados de disponibilidade como um layout editorial, e não como um dashboard. Incidentes aparecem em uma linha do tempo tipográfica e discreta, e o painel inteiro continua legível em uma parede do outro lado da sala. Construído com um núcleo de websocket minúsculo e sem dependências de runtime além do framework.",
+			"stack": [
+				{ "name": "TypeScript", "icon": "typescript" },
+				{ "name": "React", "icon": "react" },
+				{ "name": "Node.js", "icon": "nodejs" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "Demo ao vivo", "url": "https://example.com" }
+			]
+		},
+		{
+			"id": "routewise",
+			"title": "Routewise",
+			"year": "2024",
+			"tag": "React",
+			"description": "Um caderno de planejamento de viagens que mistura notas livres com trechos de rota estruturados. Arraste um parágrafo para a margem do mapa e ele vira um ponto de passagem; arraste de volta e ele vira texto de novo. O modelo de interação passou por nove protótipos até o arrastar parecer honesto, e a versão final funciona totalmente offline.",
+			"stack": [
+				{ "name": "React", "icon": "react" },
+				{ "name": "TypeScript", "icon": "typescript" },
+				{ "name": "Motion design", "icon": "motion" }
+			],
+			"links": [{ "label": "GitHub", "url": "https://github.com/ribeirogab" }]
+		},
+		{
+			"id": "paper-trail",
+			"title": "Paper Trail",
+			"year": "2023",
+			"tag": "Node.js",
+			"description": "Um arquivador de linha de comando que transforma exportações de favoritos em um site de leitura limpo e pesquisável. Ele remove rastreadores, normaliza a tipografia e gera um resumo imprimível todo domingo. Começou como um script de fim de semana e hoje é mantido como uma pequena ferramenta aberta, com uma fila de issues paciente e alguns colaboradores frequentes.",
+			"stack": [
+				{ "name": "Node.js", "icon": "nodejs" },
+				{ "name": "TypeScript", "icon": "typescript" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "npm", "url": "https://example.com" }
+			]
+		},
+		{
+			"id": "ink-rhythm",
+			"title": "Ink Rhythm",
+			"year": "2024",
+			"tag": "TypeScript",
+			"description": "Uma extensão de navegador que sobrepõe o ritmo vertical de qualquer página e destaca cada elemento que sai da linha de base. Ela exporta um relatório curto que designers anexam às revisões, e virou em silêncio a primeira passada do estúdio em toda entrega.",
+			"stack": [
+				{ "name": "TypeScript", "icon": "typescript" },
+				{ "name": "Vitest", "icon": "vitest" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "Chrome Web Store", "url": "https://example.com" }
+			]
+		},
+		{
+			"id": "marginalia",
+			"title": "Marginalia",
+			"year": "2023",
+			"tag": "React",
+			"description": "Uma camada de anotações para leitura longa que mantém as notas na margem, onde elas pertencem. Destaques, respostas e um resumo imprimível, sem nada armazenado fora do navegador de quem lê.",
+			"stack": [
+				{ "name": "React", "icon": "react" },
+				{ "name": "Next.js", "icon": "nextjs" },
+				{ "name": "Cloudflare", "icon": "cloudflare" }
+			],
+			"links": [
+				{ "label": "GitHub", "url": "https://github.com/ribeirogab" },
+				{ "label": "Demo ao vivo", "url": "https://example.com" }
+			]
+		}
+	],
+	"sections": [
+		{
+			"type": "entries",
+			"id": "experience",
+			"title": "Experiência",
+			"navLabel": "Experiência",
+			"entries": [
+				{
+					"id": "exp-1",
+					"title": "Desenvolvedor Criativo Líder",
+					"subtitle": "Northstar Studio",
+					"logo": "/logos/northstar-studio.svg",
+					"period": "2021 — Hoje",
+					"description": "Lidero a prática de interface de um estúdio de quatro pessoas, em par com designers do primeiro esboço à última curva de easing. Construí a linguagem de componentes compartilhada do estúdio, introduzi verificações de regressão visual em toda entrega para clientes e publiquei onze sites editoriais que mantêm o layout estável desde a primeira renderização. Minha parte favorita do trabalho é traduzir uma sensação vaga de direção de arte em um sistema com o qual o time inteiro consegue construir.",
+					"links": [
+						{ "label": "Site", "url": "https://example.com" },
+						{ "label": "Instagram", "url": "https://example.com" }
+					]
+				},
+				{
+					"id": "exp-2",
+					"title": "Engenheiro Frontend",
+					"subtitle": "Fieldwork Labs",
+					"logo": "/logos/fieldwork-labs.svg",
+					"period": "2018 — 2021",
+					"description": "Em um laboratório de produto focado em ferramentas de mapeamento, fui responsável pela camada de renderização de um editor de anotações pesado em canvas, usado por pesquisadores de campo. Reduzi o tempo de carregamento inicial em mais da metade, escrevi a passada de acessibilidade que tornou toda ferramenta operável por teclado e orientei dois engenheiros juniores em seus primeiros lançamentos em produção. O trabalho me ensinou a tratar performance como material de design, e não como tarefa chata.",
+					"links": [
+						{ "label": "Site", "url": "https://example.com" },
+						{ "label": "LinkedIn", "url": "https://example.com" }
+					]
+				},
+				{
+					"id": "exp-3",
+					"title": "Desenvolvedor de Interface",
+					"subtitle": "Atelier Zero",
+					"logo": "/logos/atelier-zero.svg",
+					"period": "2016 — 2018",
+					"description": "Meu primeiro papel em estúdio, dividido entre sites de clientes e experimentos internos. Transformei pranchas estáticas em páginas vivas, construí um pequeno kit de CSS que o estúdio usa até hoje e aprendi a disciplina de entregar no prazo sem deixar o capricho escapar. Duas das páginas de campanha que construí foram destacadas em vitrines independentes de design enquanto estive lá.",
+					"links": [{ "label": "Site", "url": "https://example.com" }]
+				}
+			],
+			"footnote": "Ultimamente venho estudando creative coding com shaders e reaprendendo devagar os fundamentos de type design — a meta é desenhar as letras, não só compô-las."
+		},
+		{
+			"type": "entries",
+			"id": "education",
+			"title": "Formação",
+			"entries": [
+				{
+					"id": "edu-1",
+					"title": "Bacharelado em Design e Tecnologia",
+					"subtitle": "Aldergrove University",
+					"logo": "/logos/aldergrove-university.svg",
+					"period": "2012 — 2016"
+				},
+				{
+					"id": "edu-2",
+					"title": "Certificado em Mídia Interativa",
+					"subtitle": "Harbor School of Arts",
+					"logo": "/logos/harbor-school.svg",
+					"period": "2011 — 2012"
+				}
+			]
+		},
+		{
+			"type": "projects",
+			"id": "projects",
+			"title": "Projetos",
+			"navLabel": "Projetos",
+			"featured": ["signal-board", "routewise", "paper-trail"],
+			"viewAll": "Todos os projetos"
+		},
+		{
+			"type": "articles",
+			"id": "articles",
+			"title": "Artigos",
+			"navLabel": "Artigos",
+			"limit": 3,
+			"viewAll": "Todos os artigos"
+		},
+		{
+			"type": "stack",
+			"id": "stack",
+			"title": "Stack",
+			"navLabel": "Stack",
+			"groups": [
+				{
+					"title": "Frontend",
+					"items": [
+						{ "name": "React", "icon": "react" },
+						{ "name": "Next.js", "icon": "nextjs" },
+						{ "name": "Tailwind CSS", "icon": "tailwind" }
+					]
+				},
+				{
+					"title": "Backend",
+					"items": [
+						{ "name": "Node.js", "icon": "nodejs" },
+						{ "name": "PostgreSQL", "icon": "postgresql" },
+						{ "name": "Fastify", "icon": "fastify" }
+					]
+				},
+				{
+					"title": "Linguagens",
+					"items": [
+						{ "name": "TypeScript", "icon": "typescript" },
+						{ "name": "Python", "icon": "python" },
+						{ "name": "SQL", "icon": "sql" }
+					]
+				},
+				{
+					"title": "Ferramentas",
+					"items": [
+						{ "name": "Git", "icon": "git" },
+						{ "name": "Docker", "icon": "docker" },
+						{ "name": "Vitest", "icon": "vitest" }
+					]
+				},
+				{
+					"title": "Deploy",
+					"items": [
+						{ "name": "Vercel", "icon": "vercel" },
+						{ "name": "Cloudflare", "icon": "cloudflare" },
+						{ "name": "GitHub Actions", "icon": "github-actions" }
+					]
+				},
+				{
+					"title": "Design",
+					"items": [
+						{ "name": "Figma", "icon": "figma" },
+						{ "name": "Motion design", "icon": "motion" },
+						{ "name": "Tipografia", "icon": "typography" }
+					]
+				}
+			]
+		},
+		{
+			"type": "github-contributions",
+			"id": "contributions",
+			"title": "Contribuições no GitHub",
+			"username": "ribeirogab",
+			"errorNotice": "Atividade de contribuições — em construção"
+		},
+		{
+			"type": "statement",
+			"id": "statement",
+			"text": "Acredito que software bom é *silencioso* — respeita a atenção, carrega rápido, lê bem e sai do caminho. Prefiro remover uma funcionalidade a entregar uma que grita."
+		},
+		{
+			"type": "contact",
+			"id": "contact",
+			"heading": "Vamos construir algo.",
+			"invitation": "Aberto a colaborações remotas, parcerias com estúdios e ideias fora do comum.",
+			"action": "Entre em contato",
+			"url": "mailto:hello@example.com",
+			"navLabel": "Contato"
+		}
+	]
+}

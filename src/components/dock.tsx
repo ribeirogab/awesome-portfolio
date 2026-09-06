@@ -1,7 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { FiArrowUp, FiAtSign, FiMenu, FiMoon, FiSun } from "react-icons/fi";
+import { usePathname } from "next/navigation";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
+import {
+	FiArrowUp,
+	FiAtSign,
+	FiGlobe,
+	FiMenu,
+	FiMoon,
+	FiSun,
+} from "react-icons/fi";
+import type { DockMessages } from "@/schema/messages";
 import type { EntryLink } from "@/schema/portfolio";
 
 type NavItem = {
@@ -10,27 +19,85 @@ type NavItem = {
 	index: string;
 };
 
-type MenuName = "sections" | "social";
+export type LanguageOption = {
+	locale: string;
+	name: string;
+	prefix: string;
+	articleSlugs: string[];
+};
+
+type MenuName = "sections" | "social" | "languages";
 
 type DockProps = {
 	navItems: NavItem[];
 	socialLinks: EntryLink[];
+	messages: DockMessages;
+	currentLocale: string;
+	languages: LanguageOption[];
 };
 
-export function Dock({ navItems, socialLinks }: DockProps) {
+function stripPrefix(pathname: string, prefix: string): string {
+	if (!prefix) {
+		return pathname;
+	}
+	if (pathname === prefix) {
+		return "/";
+	}
+	return pathname.startsWith(`${prefix}/`)
+		? pathname.slice(prefix.length)
+		: pathname;
+}
+
+function languageHref(
+	pathname: string,
+	current: LanguageOption,
+	target: LanguageOption,
+): string {
+	const path = stripPrefix(pathname, current.prefix);
+	const articleMatch = path.match(/^\/articles\/([^/]+)$/);
+	const targetPath =
+		articleMatch && !target.articleSlugs.includes(articleMatch[1])
+			? "/articles"
+			: path;
+	if (targetPath === "/") {
+		return target.prefix || "/";
+	}
+	return `${target.prefix}${targetPath}`;
+}
+
+export function Dock({
+	navItems,
+	socialLinks,
+	messages,
+	currentLocale,
+	languages,
+}: DockProps) {
+	const pathname = usePathname();
 	const [openMenu, setOpenMenu] = useState<MenuName | null>(null);
 	const sectionsMenuRef = useRef<HTMLDivElement>(null);
-	const sectionsButtonRef = useRef<HTMLButtonElement>(null);
 	const socialMenuRef = useRef<HTMLDivElement>(null);
+	const languagesMenuRef = useRef<HTMLDivElement>(null);
+	const sectionsButtonRef = useRef<HTMLButtonElement>(null);
 	const socialButtonRef = useRef<HTMLButtonElement>(null);
+	const languagesButtonRef = useRef<HTMLButtonElement>(null);
+	const current =
+		languages.find((language) => language.locale === currentLocale) ??
+		languages[0];
 
 	useEffect(() => {
 		if (!openMenu) {
 			return;
 		}
-		const menuRef = openMenu === "sections" ? sectionsMenuRef : socialMenuRef;
-		const buttonRef =
-			openMenu === "sections" ? sectionsButtonRef : socialButtonRef;
+		const menuRef = {
+			sections: sectionsMenuRef,
+			social: socialMenuRef,
+			languages: languagesMenuRef,
+		}[openMenu];
+		const buttonRef = {
+			sections: sectionsButtonRef,
+			social: socialButtonRef,
+			languages: languagesButtonRef,
+		}[openMenu];
 		const focusFrame = requestAnimationFrame(() => {
 			menuRef.current?.querySelector("a")?.focus();
 		});
@@ -40,7 +107,7 @@ export function Dock({ navItems, socialLinks }: DockProps) {
 				buttonRef.current?.focus();
 			}
 		};
-		const onClick = (event: MouseEvent) => {
+		const onClick = (event: Event) => {
 			const target = event.target as Node;
 			if (
 				!menuRef.current?.contains(target) &&
@@ -71,13 +138,24 @@ export function Dock({ navItems, socialLinks }: DockProps) {
 		} catch {}
 	};
 
+	const keepHash = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+		setOpenMenu(null);
+		if (window.location.hash) {
+			event.preventDefault();
+			window.location.assign(`${href}${window.location.hash}`);
+		}
+	};
+
+	const menuClass = (name: MenuName) =>
+		openMenu === name ? "dock-menu open" : "dock-menu";
+
 	return (
 		<>
-			<nav className="dock" aria-label="Quick actions">
+			<nav className="dock" aria-label={messages.quickActions}>
 				<button
 					className="dock-btn"
 					type="button"
-					aria-label="Back to top"
+					aria-label={messages.backToTop}
 					onClick={() => window.scrollTo({ top: 0 })}
 				>
 					<FiArrowUp strokeWidth={1.8} aria-hidden="true" />
@@ -87,7 +165,9 @@ export function Dock({ navItems, socialLinks }: DockProps) {
 					type="button"
 					ref={sectionsButtonRef}
 					aria-label={
-						openMenu === "sections" ? "Close section menu" : "Open section menu"
+						openMenu === "sections"
+							? messages.closeSections
+							: messages.openSections
 					}
 					aria-expanded={openMenu === "sections"}
 					aria-controls="dock-menu"
@@ -101,9 +181,7 @@ export function Dock({ navItems, socialLinks }: DockProps) {
 					type="button"
 					ref={socialButtonRef}
 					aria-label={
-						openMenu === "social"
-							? "Close social links menu"
-							: "Open social links menu"
+						openMenu === "social" ? messages.closeSocial : messages.openSocial
 					}
 					aria-expanded={openMenu === "social"}
 					aria-controls="dock-social"
@@ -114,19 +192,36 @@ export function Dock({ navItems, socialLinks }: DockProps) {
 				<button
 					className="dock-btn"
 					type="button"
-					aria-label="Toggle theme"
+					aria-label={messages.toggleTheme}
 					onClick={toggleTheme}
 				>
 					<FiMoon className="icon-moon" strokeWidth={1.8} aria-hidden="true" />
 					<FiSun className="icon-sun" strokeWidth={1.8} aria-hidden="true" />
 				</button>
+				{languages.length > 1 ? (
+					<button
+						className="dock-btn"
+						type="button"
+						ref={languagesButtonRef}
+						aria-label={
+							openMenu === "languages"
+								? messages.closeLanguages
+								: messages.openLanguages
+						}
+						aria-expanded={openMenu === "languages"}
+						aria-controls="dock-languages"
+						onClick={() => toggleMenu("languages")}
+					>
+						<FiGlobe strokeWidth={1.8} aria-hidden="true" />
+					</button>
+				) : null}
 			</nav>
 			<div
-				className={openMenu === "sections" ? "dock-menu open" : "dock-menu"}
+				className={menuClass("sections")}
 				id="dock-menu"
 				ref={sectionsMenuRef}
 				role="menu"
-				aria-label="Sections"
+				aria-label={messages.sections}
 			>
 				{navItems.map((item) => (
 					<a
@@ -140,11 +235,11 @@ export function Dock({ navItems, socialLinks }: DockProps) {
 				))}
 			</div>
 			<div
-				className={openMenu === "social" ? "dock-menu open" : "dock-menu"}
+				className={menuClass("social")}
 				id="dock-social"
 				ref={socialMenuRef}
 				role="menu"
-				aria-label="Social links"
+				aria-label={messages.socialLinks}
 			>
 				{socialLinks.map((link) => (
 					<a
@@ -159,6 +254,33 @@ export function Dock({ navItems, socialLinks }: DockProps) {
 					</a>
 				))}
 			</div>
+			{languages.length > 1 ? (
+				<div
+					className={menuClass("languages")}
+					id="dock-languages"
+					ref={languagesMenuRef}
+					role="menu"
+					aria-label={messages.languages}
+				>
+					{languages.map((language) => {
+						const href = languageHref(pathname, current, language);
+						return (
+							<a
+								key={language.locale}
+								href={href}
+								role="menuitem"
+								aria-current={
+									language.locale === current.locale ? "true" : undefined
+								}
+								onClick={(event) => keepHash(event, href)}
+							>
+								{language.name}{" "}
+								<span className="idx">{language.locale.toUpperCase()}</span>
+							</a>
+						);
+					})}
+				</div>
+			) : null}
 		</>
 	);
 }

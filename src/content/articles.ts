@@ -3,11 +3,23 @@ import { basename, join } from "node:path";
 import matter from "gray-matter";
 import { z } from "zod";
 import { type Article, articleFrontmatterSchema } from "../schema/article.ts";
-import { readingTime, renderMarkdown } from "./markdown.ts";
+import { fill } from "../schema/messages.ts";
+import { localeDirectory, localizePath } from "./locales.ts";
+import { readingMinutes, renderMarkdown } from "./markdown.ts";
+import { loadMessages } from "./messages.ts";
 
-export const articlesDirectory = join("content", "articles");
+const cache = new Map<string, Article[]>();
 
-function parseArticle(filePath: string): Article {
+export function articlesDirectory(locale: string): string {
+	return join(localeDirectory(locale), "articles");
+}
+
+function parseArticle(
+	filePath: string,
+	locale: string,
+	readingTimeTemplate: string,
+	root: string,
+): Article {
 	const file = basename(filePath);
 	const slug = file.replace(/\.md$/, "");
 	const { data, content } = matter(readFileSync(filePath, "utf8"));
@@ -21,15 +33,29 @@ function parseArticle(filePath: string): Article {
 	return {
 		...frontmatter.data,
 		slug,
+		locale,
+		href: localizePath(locale, `/articles/${slug}`, root),
 		html: renderMarkdown(content),
-		readingTime: readingTime(content),
+		readingTime: fill(readingTimeTemplate, {
+			minutes: readingMinutes(content),
+		}),
 	};
 }
 
-export function loadArticles(root = process.cwd()): Article[] {
-	const directory = join(root, articlesDirectory);
-	return readdirSync(directory)
+export function loadArticles(locale: string, root = process.cwd()): Article[] {
+	const key = `${root}:${locale}`;
+	const cached = cache.get(key);
+	if (cached) {
+		return cached;
+	}
+	const directory = join(root, articlesDirectory(locale));
+	const { readingTime } = loadMessages(locale, root);
+	const articles = readdirSync(directory)
 		.filter((file) => file.endsWith(".md"))
-		.map((file) => parseArticle(join(directory, file)))
+		.map((file) =>
+			parseArticle(join(directory, file), locale, readingTime, root),
+		)
 		.sort((a, b) => b.date.localeCompare(a.date));
+	cache.set(key, articles);
+	return articles;
 }
