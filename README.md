@@ -2,11 +2,11 @@
 
 A developer portfolio with a home page, an articles page, and a projects page, in as many languages as you want. Structured content lives in [`content/<locale>/portfolio.json`](content/en/portfolio.json), interface strings in [`content/<locale>/messages.json`](content/en/messages.json), and articles as Markdown files under [`content/<locale>/articles/`](content/en/articles). To make it yours, edit those files. No code changes required.
 
-**Demo:** https://ap.ribas.sh (English) and https://ap.ribas.sh/pt (Portuguese)
+**Demo:** https://ap.ribeiro.engineer (English) and https://ap.ribeiro.engineer/pt (Portuguese)
 
 ## Built with this template
 
-- [ribas.sh](https://ribas.sh) by [@ribeirogab](https://github.com/ribeirogab)
+- [ribeiro.engineer](https://ribeiro.engineer) by [@ribeirogab](https://github.com/ribeirogab)
 
 Using it too? Open a PR and add yours to the list.
 

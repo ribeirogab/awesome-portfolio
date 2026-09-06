@@ -4,7 +4,7 @@
 	"compatibility_date": "2026-08-30",
 	"routes": [
 		{
-			"pattern": "ap.ribas.sh",
+			"pattern": "ap.ribeiro.engineer",
 			"custom_domain": true
 		}
 	],
