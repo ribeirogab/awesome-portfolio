@@ -107,7 +107,6 @@ Everything below is generated from the content at build time. No configuration i
 - JSON-LD structured data: `WebSite`, `Person` and `ProfilePage` on the home page, `CollectionPage` and `BreadcrumbList` on the collection pages, `BlogPosting` and `BreadcrumbList` on each article, all with `inLanguage`.
 - A branded 404 page in [`src/app/global-not-found.tsx`](src/app/global-not-found.tsx), rendered in the default language and served with a real 404 status by Cloudflare.
 - Security and caching headers in [`public/_headers`](public/_headers) and a `/favicon.ico` redirect in [`public/_redirects`](public/_redirects). Cloudflare Workers applies both files to static assets. The `next dev` server ignores them.
-- Old domains redirect permanently to the current one. [`src/worker.ts`](src/worker.ts) runs in front of the static assets and reads the `REDIRECT_HOSTS` map in [`wrangler.jsonc`](wrangler.jsonc), where each key is an old host and each value the host to redirect to. Every request that is not a redirect is served from the static assets. Remove the entries you do not need.
 
 `site.url` in every `portfolio.json` must be the production origin. It is the base of every canonical URL, sitemap entry and social image.
 
