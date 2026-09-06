@@ -106,7 +106,7 @@ Everything below is generated from the content at build time. No configuration i
 - `sitemap.xml` with every language and its alternates, `robots.txt`, and RSS autodiscovery for the feed of each language.
 - JSON-LD structured data: `WebSite`, `Person` and `ProfilePage` on the home page, `CollectionPage` and `BreadcrumbList` on the collection pages, `BlogPosting` and `BreadcrumbList` on each article, all with `inLanguage`.
 - A branded 404 page in [`src/app/global-not-found.tsx`](src/app/global-not-found.tsx), rendered in the default language and served with a real 404 status by Cloudflare.
-- Security and caching headers in [`public/_headers`](public/_headers) and a `/favicon.ico` redirect in [`public/_redirects`](public/_redirects). Cloudflare Workers applies both files to static assets. The `next dev` server ignores them.
+- Security and caching headers in [`public/_headers`](public/_headers), and in [`public/_redirects`](public/_redirects) a `/favicon.ico` redirect plus the permanent redirect of the old demo domain `ap.ribas.sh` to `ap.ribeiro.engineer`. Cloudflare Workers applies both files to static assets. The `next dev` server ignores them.
 
 `site.url` in every `portfolio.json` must be the production origin. It is the base of every canonical URL, sitemap entry and social image.
 

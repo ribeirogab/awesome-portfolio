@@ -6,6 +6,10 @@
 		{
 			"pattern": "ap.ribeiro.engineer",
 			"custom_domain": true
+		},
+		{
+			"pattern": "ap.ribas.sh",
+			"custom_domain": true
 		}
 	],
 	"assets": {
