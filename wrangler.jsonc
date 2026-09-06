@@ -2,6 +2,12 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "awesome-portfolio",
 	"compatibility_date": "2026-08-30",
+	"main": "src/worker.ts",
+	"vars": {
+		"REDIRECT_HOSTS": {
+			"ap.ribas.sh": "ap.ribeiro.engineer"
+		}
+	},
 	"routes": [
 		{
 			"pattern": "ap.ribeiro.engineer",
@@ -14,6 +20,8 @@
 	],
 	"assets": {
 		"directory": "./out",
-		"not_found_handling": "404-page"
+		"binding": "ASSETS",
+		"not_found_handling": "404-page",
+		"run_worker_first": true
 	}
 }
